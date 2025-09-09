@@ -1,6 +1,5 @@
 package com.example.imagery_vr.models
 
-import com.example.imagery_vr.ui.Survey
 import kotlinx.serialization.Serializable
 
 @Serializable

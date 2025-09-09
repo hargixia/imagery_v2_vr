@@ -67,6 +67,7 @@ class AuthLogin : AppCompatActivity() {
             ){
                 tv_error.setText("Harap Isi Username dan Password nya...")
             }else{
+                tv_error.setText(" ")
                 val req     = tx_username.text.toString() + ">>" + tx_passwrod.text.toString()
                 val enco    = encryption().encob64(req)
                 apis.login(enco).enqueue(object : Callback<response>{
