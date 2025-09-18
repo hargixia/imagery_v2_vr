@@ -34,11 +34,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/md_rv_1"
-        android:layout_width="407dp"
+        android:layout_width="match_parent"
         android:layout_height="550dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/md_desc"
-        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/card_item_materi_detail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

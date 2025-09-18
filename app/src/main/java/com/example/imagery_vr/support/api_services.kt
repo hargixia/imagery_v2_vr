@@ -1,5 +1,6 @@
 package com.example.imagery_vr.support
 
+import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
 import retrofit2.Call
 import retrofit2.http.GET
@@ -14,4 +15,7 @@ interface api_services {
 
     @GET("/materi")
     fun getMateri(): Call<List<materi_list>>
+
+    @GET("/materi/detail/{data}")
+    fun getMateriDetail(@Path("data") data : String) : retrofit2.Call<List<materi_detail_list>>
 }

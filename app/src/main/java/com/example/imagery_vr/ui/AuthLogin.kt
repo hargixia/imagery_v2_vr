@@ -50,7 +50,7 @@ class AuthLogin : AppCompatActivity() {
             insets
         }
 
-        val apis    = retrofit.instance.create(api_services::class.java)
+        val apis        = retrofit.instance.create(api_services::class.java)
         ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
 
         tx_username     = findViewById(R.id.al_username)

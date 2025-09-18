@@ -7,14 +7,27 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
+import com.example.imagery_vr.adapters.adapter_mater_detail
+import com.example.imagery_vr.adapters.adapter_materi
+import com.example.imagery_vr.models.materi_detail_list
+import com.example.imagery_vr.support.api_services
+import com.example.imagery_vr.support.encryption
+import com.example.imagery_vr.support.response
+import com.example.imagery_vr.support.retrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Materi_Detail : AppCompatActivity() {
 
     private lateinit var tv_judul       : TextView
     private lateinit var tv_desc        : TextView
     private lateinit var rv_1           : RecyclerView
+
+    private lateinit var adapter        : adapter_mater_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +39,8 @@ class Materi_Detail : AppCompatActivity() {
             insets
         }
 
+        val apis = retrofit.instance.create(api_services::class.java)
+
         val id      = intent.getIntExtra("m_id",0)
         val judul   = intent.getStringExtra("m_judul")
         val desc    = intent.getStringExtra("m_desc")
@@ -36,6 +51,33 @@ class Materi_Detail : AppCompatActivity() {
 
         tv_judul.setText(judul)
         tv_desc.setText(desc)
+        rv_1.layoutManager = LinearLayoutManager(this)
+
+        val ref     = "md>>" + id.toString()
+        val parcel  = encryption().encob64(ref)
+
+        apis.getMateriDetail(parcel).enqueue(object : Callback<List<materi_detail_list>>{
+            override fun onResponse(
+                call: Call<List<materi_detail_list>?>,
+                response: Response<List<materi_detail_list>?>
+            ) {
+                if(response.isSuccessful){
+                    val data = response.body()
+                    if(data != null){
+                        adapter = adapter_mater_detail(data)
+                        rv_1.adapter =adapter
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<List<materi_detail_list>?>,
+                t: Throwable
+            ) {
+                //tv_desc.setText(t.toString())
+            }
+
+        })
 
     }
 }
