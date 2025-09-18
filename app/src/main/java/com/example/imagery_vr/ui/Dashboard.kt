@@ -9,12 +9,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.imagery_vr.MainActivity
 import com.example.imagery_vr.R
 
 class Dashboard : AppCompatActivity() {
 
     private lateinit var btn_logout         : Button
     private lateinit var btn_test           : Button
+    private lateinit var btn_materi         : Button
     private lateinit var ds                 : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,7 @@ class Dashboard : AppCompatActivity() {
 
         btn_logout      = findViewById(R.id.db_logout_btn)
         btn_test        = findViewById(R.id.db_btn_test)
+        btn_materi      = findViewById(R.id.db_btn_materi)
 
         btn_logout.setOnClickListener {
             logout()
@@ -39,12 +42,16 @@ class Dashboard : AppCompatActivity() {
             startActivity(Intent(this@Dashboard, Survey::class.java))
         }
 
+        btn_materi.setOnClickListener {
+            startActivity(Intent(this@Dashboard, materi::class.java))
+        }
     }
 
     fun logout(){
         val dse         = ds.edit()
         dse.clear()
-        startActivity(Intent(this@Dashboard,splashScreen::class.java))
+        dse.apply()
+        startActivity(Intent(this@Dashboard, MainActivity::class.java))
         finish()
     }
 }

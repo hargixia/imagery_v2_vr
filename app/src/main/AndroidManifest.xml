@@ -14,6 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMAGERY_VR">
         <activity
+            android:name=".ui.Materi_Play_Video"
+            android:exported="false" />
+        <activity
+            android:name=".Materi_Play_Video"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Materi_Detail"
+            android:exported="false" />
+        <activity
+            android:name=".ui.materi"
+            android:exported="false" />
+        <activity
             android:name=".ui.Survey"
             android:exported="false" />
         <activity

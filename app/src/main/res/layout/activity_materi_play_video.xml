@@ -5,16 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Survey">
+    tools:context=".ui.Materi_Play_Video">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:nestedScrollingEnabled="false"
-        android:id="@+id/survey_rv_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:listitem="@layout/card_item_survey"/>
-    
 </androidx.constraintlayout.widget.ConstraintLayout>
