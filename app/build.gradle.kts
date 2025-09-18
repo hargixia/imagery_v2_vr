@@ -54,4 +54,20 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    val exoplayerVersion = "1.4.1"
+    // Core ExoPlayer library
+    implementation("androidx.media3:media3-exoplayer:$exoplayerVersion")
+    // Common utilities (recommended)
+    implementation("androidx.media3:media3-common:$exoplayerVersion")
+    // UI components
+    implementation("androidx.media3:media3-ui:$exoplayerVersion")
+    // DASH support
+    implementation("androidx.media3:media3-exoplayer-dash:$exoplayerVersion")
+    // HLS support
+    implementation("androidx.media3:media3-exoplayer-hls:$exoplayerVersion")
+    // SmoothStreaming support
+    implementation("androidx.media3:media3-exoplayer-smoothstreaming:$exoplayerVersion")
+    // Optional: Extractor (for progressive formats like MP4, MP3)
+    implementation("androidx.media3:media3-exoplayer-rtsp:$exoplayerVersion")
 }

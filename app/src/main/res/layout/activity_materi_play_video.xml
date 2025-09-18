@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Materi_Play_Video">
+    tools:context=".ui.Materi_Play_Video"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center">
 
     <TextView
-        android:id="@+id/mpv_url"
+        android:id="@+id/m_pv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="url"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="36dp"
+        android:text="Deskripsi"
+        android:textSize="23dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/m_pv_tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Video Akan Dimulai Dalam" />
+
+    <TextView
+        android:id="@+id/m_pv_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="10"
+        android:textSize="20dp" />
+
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/m_pv_videoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        app:use_controller="true"
+        app:resize_mode="zoom"
+        />
+
+
+</LinearLayout>
