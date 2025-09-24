@@ -1,6 +1,7 @@
 package com.example.imagery_vr.support
 
 import com.example.imagery_vr.models.kuisoner_cek
+import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
@@ -31,8 +32,8 @@ interface api_services {
     @GET("/kuisoner-cek/{data}")
     fun getKuisonerCek(@Path("data") data : String) : retrofit2.Call<kuisoner_cek>
 
-    @GET("/kuisoner-pertanyaan")
-    fun getKuisonerPertanyaan() : Call<List<survey_soal>>
+    @GET("/kuisoner-pertanyaan/{id}")
+    fun getKuisonerPertanyaan(@Path("id") id : String) : Call<List<kuisoner_pertanyaan>>
 
     @GET("/kuisoner-jawaban/{data}")
     fun getKuisonerJawaban(@Path("data") data : String) : retrofit2.Call<kuisoner_response>

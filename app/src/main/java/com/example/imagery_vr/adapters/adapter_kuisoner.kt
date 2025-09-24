@@ -51,7 +51,7 @@ class adapter_kuisoner (
             jawab.addAll(List(data.size - jawab.size){ kuisoner_jawaban(id_user,id_materi,currentItem.id,opsi)})
         }
 
-        holder.itemText.text = currentItem.pertanyaan
+        holder.itemText.text = currentItem.soal
 
         holder.opsi1.setOnClickListener {
             opsi = 1

@@ -1,6 +1,6 @@
 package com.example.imagery_vr.support
 
 data class response(
-    val status  : String,
+    val status  : Int,
     val data    : String
 )

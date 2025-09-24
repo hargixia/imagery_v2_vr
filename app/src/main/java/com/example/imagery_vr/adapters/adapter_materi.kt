@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
@@ -84,7 +85,7 @@ class adapter_materi (
                     call: Call<kuisoner_cek?>,
                     t: Throwable
                 ) {
-                    TODO("Not yet implemented")
+                    Toast.makeText(holder.itemView.context,"Error => ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })
         }

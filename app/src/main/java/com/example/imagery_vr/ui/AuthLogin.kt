@@ -62,7 +62,7 @@ class AuthLogin : AppCompatActivity() {
 
         btn_login.setOnClickListener {
             if (
-                tx_passwrod.text.toString() == "" ||
+                tx_username.text.toString() == "" ||
                 tx_passwrod.text.toString() == ""
             ){
                 tv_error.setText("Harap Isi Username dan Password nya...")
@@ -79,11 +79,11 @@ class AuthLogin : AppCompatActivity() {
                                     val jsonarr = encryption().splitter(jsonstr)
                                     val userdata = Gson().fromJson(jsonarr[1],users::class.java)
 
-                                    if (it.status == "0"){
+                                    if (it.status == 0){
                                         savedata(userdata)
                                         tv_error.setText("")
                                         startActivity(Intent(this@AuthLogin,Dashboard::class.java))
-                                    }else if (it.status == "2"){
+                                    }else if (it.status == 2){
                                         savedata(userdata)
                                         tv_error.setText("")
                                         startActivity(Intent(this@AuthLogin,Survey::class.java))
@@ -91,7 +91,7 @@ class AuthLogin : AppCompatActivity() {
                                         tv_error.setText(jsonarr[0])
                                     }
                                 }catch (e : Exception){
-                                    tv_error.setText("Username atau Password Salah.")
+                                    tv_error.setText("Username atau Password Salah. ${e.message}")
                                 }
                             }
                         }else{

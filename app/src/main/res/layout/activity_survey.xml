@@ -106,7 +106,6 @@
                 android:id="@+id/survey_rv_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/card_item_survey" />
 
             <com.google.android.material.button.MaterialButton
