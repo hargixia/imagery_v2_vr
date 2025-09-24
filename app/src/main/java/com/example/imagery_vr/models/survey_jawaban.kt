@@ -1,6 +1,7 @@
 package com.example.imagery_vr.models
 
 data class survey_jawaban(
-    val pos : Int,
-    val status : Int
+    val id_user         : Int,
+    val id_pertanyaan   : Int,
+    val value           : Int
 )

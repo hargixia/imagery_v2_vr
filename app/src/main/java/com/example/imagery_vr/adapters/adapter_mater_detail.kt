@@ -9,12 +9,13 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
 import com.example.imagery_vr.adapters.adapter_materi.ViewHolder
+import com.example.imagery_vr.models.materi_detail_items
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.ui.Materi_Detail
 import com.example.imagery_vr.ui.Materi_Play_Video
 
 class adapter_mater_detail(
-    private val data : List<materi_detail_list>
+    private val data : List<materi_detail_items>
 ) : RecyclerView.Adapter<adapter_mater_detail.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -34,7 +35,7 @@ class adapter_mater_detail(
         holder: ViewHolder,
         position: Int
     ) {
-        val item = data[0].res[position]
+        val item = data[position]
         holder.tv_desc.text    = item.desc
         holder.card.setOnClickListener {
             val intent = Intent(holder.itemView.context, Materi_Play_Video::class.java)

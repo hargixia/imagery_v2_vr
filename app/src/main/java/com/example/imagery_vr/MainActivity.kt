@@ -37,18 +37,18 @@ class MainActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             val ndate = LocalDate.now()
-            val expdate = ndate.plusDays(5)
 
-            ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
+            ds                  = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
             val ds_login_exp    = ds.getString("login_exp","2025-01-01")
             val ds_login_stat   = ds.getInt("login_status",0)
 
-            Toast.makeText(this@MainActivity,"ref : ${ds_login_stat}",Toast.LENGTH_LONG).show()
-            if(ds_login_exp != ndate.toString() && ds_login_stat == 1){
-                startActivity(Intent(this@MainActivity,Dashboard::class.java))
-            }else{
+            if(ds_login_stat == 0 && ds_login_exp == ndate.toString()){
                 startActivity(Intent(this@MainActivity,AuthLogin::class.java))
+            }else{
+                startActivity(Intent(this@MainActivity,Dashboard::class.java))
             }
+
+            Toast.makeText(this@MainActivity,"ref : ${ds_login_stat}",Toast.LENGTH_LONG).show()
 
         },3000L)
     }

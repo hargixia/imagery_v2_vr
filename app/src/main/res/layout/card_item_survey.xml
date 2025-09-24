@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
@@ -18,22 +18,48 @@
             android:layout_height="wrap_content"
             android:id="@+id/sci_text_1"
             android:text="Test"
+            android:textSize="16dp"
+            android:layout_margin="10dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sci_opsi_1"
-                android:text="Tidak"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="5dp">
 
-            <Button
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/sci_rg_1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/sci_opsi_2"
-                android:text="Ya"/>
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="0dp">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci_rg_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak"
+                    android:layout_marginEnd="24dp"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci_rg_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Netral"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci_rg_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iya"
+                    app:buttonTint="@color/u_navy"/>
+
+            </RadioGroup>
+
         </LinearLayout>
     </LinearLayout>
 

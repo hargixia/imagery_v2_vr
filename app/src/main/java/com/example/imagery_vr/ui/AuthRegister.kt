@@ -6,6 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +20,7 @@ import com.example.imagery_vr.support.response
 import com.example.imagery_vr.support.api_services
 import com.example.imagery_vr.support.encryption
 import com.example.imagery_vr.support.retrofit
+import com.google.android.material.textfield.TextInputLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,11 +36,14 @@ class AuthRegister : AppCompatActivity() {
     private lateinit var tx_name        : EditText
     private lateinit var tx_tglL        : TextView
     private lateinit var tx_jk          : EditText
+    var gender : RadioGroup? = null
+    lateinit var radio : RadioButton
     private lateinit var tx_bidang      : EditText
     private lateinit var tx_pass        : EditText
     private lateinit var tx_cpass       : EditText
     private lateinit var btn_date       : Button
     private lateinit var btn_regis      : Button
+    private lateinit var btn_login      : Button
     private lateinit var tv_error       : TextView
 
     private lateinit var tglL           : String
@@ -59,11 +65,11 @@ class AuthRegister : AppCompatActivity() {
         tx_name     = findViewById(R.id.ar_nama)
         tx_tglL     = findViewById(R.id.ar_date)
         btn_date    = findViewById(R.id.ar_date_btn)
-        tx_jk       = findViewById(R.id.ar_jenis_kelamin)
-        tx_bidang   = findViewById(R.id.ar_Bidang)
+        gender = findViewById(R.id.ar_regis_gender)
         tx_pass     = findViewById(R.id.ar_password)
         tx_cpass    = findViewById(R.id.ar_cpassword)
         btn_regis   = findViewById(R.id.ar_register_btn)
+        btn_login   = findViewById(R.id.ar_login_btn)
         tv_error    = findViewById(R.id.ar_error)
 
         tglL        = ""
@@ -72,13 +78,18 @@ class AuthRegister : AppCompatActivity() {
             showDatePicker()
         }
 
+        btn_login.setOnClickListener {
+            startActivity(Intent(this@AuthRegister, AuthLogin::class.java))
+        }
+
         btn_regis.setOnClickListener {
+            val selectOption: Int = gender!!.checkedRadioButtonId
+            radio = findViewById(selectOption)
+
             if (
                 tx_username.text.toString()     == "" ||
                 tx_name.text.toString()         == "" ||
                 tglL                            == "" ||
-                tx_jk.text.toString()           == "" ||
-                tx_bidang.text.toString()       == "" ||
                 tx_pass.text.toString()         == "" ||
                 tx_cpass.text.toString()        == ""
                 ){
@@ -87,11 +98,16 @@ class AuthRegister : AppCompatActivity() {
                 if(tx_cpass.text.toString() != tx_pass.text.toString()){
                     Toast.makeText(this,"Password Tidak Sama",Toast.LENGTH_SHORT).show()
                 }else{
+                    var sgender = "L"
+                    when(radio.text.toString()){
+                        "Laki-Laki" -> sgender = "L"
+                        "Perempuan" -> sgender = "P"
+                    }
                     val req =   tx_username.text.toString() + ">>" +
                                 tx_name.text.toString() + ">>" +
                                 tglL + ">>" +
-                                tx_jk.text.toString() + ">>" +
-                                tx_bidang.text.toString() + ">>" +
+                                sgender + ">>" +
+                                "1 >> "+
                                 tx_cpass.text.toString()
 
                     apis.register(encryption().encob64(req)).enqueue(object : Callback<response>{

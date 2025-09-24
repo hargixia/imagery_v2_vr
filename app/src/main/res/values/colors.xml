@@ -2,4 +2,32 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="u_navy">#16325B</color>
+    <color name="u_teal">#227B94</color>
+    <color name="u_sea">#227B94</color>
+    <color name="u_yellow">#FFDC7F</color>
+    <color name="sporty_primary_blue">#007BFF</color>
+    <color name="sporty_accent_orange">#FF5722</color>
+    <color name="sporty_dark_bg">#212121</color>
+    <color name="sporty_text_on_dark">#FFFFFF</color>
+    <color name="sporty_text_light">#E0E0E0</color>
+    <color name="sporty_text_dark">#333333</color>
+    <color name="sporty_card_background">#FFFFFF</color>
+    <color name="sporty_danger_red">#DC3545</color>
+    <color name="sporty_light_grey_bg">#F5F5F5</color>
+
+    <!-- Color primary and second -->
+    <color name="c1">#37AFE1</color>
+    <color name="c2">#4CC9FE</color>
+    <color name="c3">#F5F4B3</color>
+    <color name="c4">#FFFECB</color>
+    <color name="danger1">#740938</color>
+    <color name="danger2">#AF1740</color>
+    <color name="danger3">#CC2B52</color>
+    <color name="danger4">#DE7C7D</color>
+
+
+
+    <color name="c1_180">#B437AFE1</color>
 </resources>

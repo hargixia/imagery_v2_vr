@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,6 +15,7 @@ import com.example.imagery_vr.R
 
 class Dashboard : AppCompatActivity() {
 
+    private lateinit var db_tv1             : TextView
     private lateinit var btn_logout         : Button
     private lateinit var btn_test           : Button
     private lateinit var btn_materi         : Button
@@ -29,10 +31,15 @@ class Dashboard : AppCompatActivity() {
             insets
         }
         ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
+        val ds_nama     = ds.getString("nama","user")
+        val ds_id       = ds.getInt("user_id",0)
 
+        db_tv1          = findViewById(R.id.db_tv1)
         btn_logout      = findViewById(R.id.db_logout_btn)
         btn_test        = findViewById(R.id.db_btn_test)
         btn_materi      = findViewById(R.id.db_btn_materi)
+
+        db_tv1.text = "Dashboard : $ds_nama"
 
         btn_logout.setOnClickListener {
             logout()

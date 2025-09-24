@@ -3,15 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
     android:id="@+id/cim_card">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:background="#22ff">
+        android:background="@color/sporty_light_grey_bg">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -24,15 +28,17 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cim_tv_judul"
                 android:text="Judul"
+                android:textColor="@color/u_navy"
                 android:layout_marginTop="10dp"
                 android:textSize="22dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cim_tv_deskripsi"
                 android:text="Deskripsi"
+                android:textColor="@color/u_navy"
                 android:layout_marginBottom="10dp"/>
 
         </LinearLayout>

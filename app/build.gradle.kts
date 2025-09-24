@@ -70,4 +70,5 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer-smoothstreaming:$exoplayerVersion")
     // Optional: Extractor (for progressive formats like MP4, MP3)
     implementation("androidx.media3:media3-exoplayer-rtsp:$exoplayerVersion")
+    implementation("androidx.media3:media3-session:1.3.1")
 }

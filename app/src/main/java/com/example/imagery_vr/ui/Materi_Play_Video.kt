@@ -1,6 +1,7 @@
 package com.example.imagery_vr.ui
 
 import android.media.session.MediaController
+import android.media.session.MediaSession
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -33,6 +34,7 @@ class Materi_Play_Video : AppCompatActivity() {
     private lateinit var exoplayer      : ExoPlayer
 
     lateinit var mediaControl           : android.widget.MediaController
+    private lateinit var mediasesion    : androidx.media3.session.MediaSession
 
     private var countDownTimer: CountDownTimer? = null
 
@@ -49,6 +51,7 @@ class Materi_Play_Video : AppCompatActivity() {
         val desc        = intent.getStringExtra("md2_desc")
         val video_url   = intent.getStringExtra("md2_video")
         exoplayer = ExoPlayer.Builder(this).build()
+        mediasesion = androidx.media3.session.MediaSession.Builder(this,exoplayer).build()
 
         tv_desc         = findViewById(R.id.m_pv_desc)
         tv_count_down   = findViewById(R.id.m_pv_countdown)
@@ -63,7 +66,7 @@ class Materi_Play_Video : AppCompatActivity() {
         exoplayer.repeatMode = ExoPlayer.REPEAT_MODE_OFF
         exoplayer.prepare()
 
-        startCountdown(5000,1000)
+        startCountdown(11000,1000)
     }
 
     private fun startCountdown(totalTimeMillis: Long, intervalMillis: Long) {
@@ -88,8 +91,6 @@ class Materi_Play_Video : AppCompatActivity() {
                     controller.hide(WindowInsetsCompat.Type.systemBars())
                     controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
-
-                exoplayer.play()
             }
         }.start()
     }

@@ -1,6 +1,8 @@
 package com.example.imagery_vr.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -26,7 +28,7 @@ class Materi_Detail : AppCompatActivity() {
     private lateinit var tv_judul       : TextView
     private lateinit var tv_desc        : TextView
     private lateinit var rv_1           : RecyclerView
-
+    private lateinit var btn_kuisoner   : Button
     private lateinit var adapter        : adapter_mater_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,7 @@ class Materi_Detail : AppCompatActivity() {
         tv_judul    = findViewById(R.id.md_Judul)
         tv_desc     = findViewById(R.id.md_desc)
         rv_1        = findViewById(R.id.md_rv_1)
+        btn_kuisoner= findViewById(R.id.md_kuisoner_btn)
 
         tv_judul.setText(judul)
         tv_desc.setText(desc)
@@ -55,6 +58,15 @@ class Materi_Detail : AppCompatActivity() {
 
         val ref     = "md>>" + id.toString()
         val parcel  = encryption().encob64(ref)
+
+        btn_kuisoner.setOnClickListener {
+            val intent = Intent(this@Materi_Detail, Kuisoner::class.java).apply {
+                putExtra("mode","PreTest")
+                putExtra("m_id",id)
+                putExtra("m_judul",judul)
+            }
+            startActivity(intent)
+        }
 
         apis.getMateriDetail(parcel).enqueue(object : Callback<List<materi_detail_list>>{
             override fun onResponse(
@@ -64,7 +76,7 @@ class Materi_Detail : AppCompatActivity() {
                 if(response.isSuccessful){
                     val data = response.body()
                     if(data != null){
-                        adapter = adapter_mater_detail(data)
+                        adapter = adapter_mater_detail(data[0].res)
                         rv_1.adapter =adapter
                     }
                 }
