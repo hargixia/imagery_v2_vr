@@ -17,6 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMAGERY_VR">
         <activity
+            android:name=".ui.Perkembangan"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Profile"
+            android:exported="false" />
+        <activity
+            android:name=".ui.Profil"
+            android:exported="false" />
+        <activity
+            android:name=".ui.About"
+            android:exported="false" />
+        <activity
             android:name=".ui.Kuisoner_Hasil"
             android:exported="false" />
         <activity
