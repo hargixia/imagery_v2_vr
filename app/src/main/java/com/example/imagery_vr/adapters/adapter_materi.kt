@@ -62,22 +62,33 @@ class adapter_materi (
                 ) {
                     if(response.isSuccessful){
                         val isData = response.body()
-                        if(isData?.status == 0){
-                            val intent = Intent(holder.itemView.context, Kuisoner::class.java).apply {
-                                putExtra("mode","PreTest")
-                                putExtra("m_id",item.id )
-                                putExtra("m_judul",item.judul)
-                            }
-                            holder.itemView.context.startActivity(intent)
-                        }else if(isData?.status == 1){
-                            val intent = Intent(holder.itemView.context, Materi_Detail::class.java)
-                                .apply {
-                                    putExtra("m_id",item.id)
+                        if (isData !=null){
+                            if(isData.status == 0){
+                                val intent = Intent(holder.itemView.context, Kuisoner::class.java).apply {
+                                    putExtra("mode",isData.msg)
+                                    putExtra("m_id",item.id )
                                     putExtra("m_judul",item.judul)
-                                    putExtra("m_desc",item.desc)
                                 }
-                            holder.itemView.context.startActivity(intent)
+                                holder.itemView.context.startActivity(intent)
+                            }else if(isData.status == 1){
+                                val intent = Intent(holder.itemView.context, Materi_Detail::class.java)
+                                    .apply {
+                                        putExtra("m_id",item.id)
+                                        putExtra("m_judul",item.judul)
+                                        putExtra("m_desc",item.desc)
+                                    }
+                                holder.itemView.context.startActivity(intent)
+                            }else{
+                                Toast.makeText(holder.itemView.context,"Error => ${isData.msg}",
+                                    Toast.LENGTH_LONG).show()
+                            }
+                        }else{
+                            Toast.makeText(holder.itemView.context,"Error => No Data.",
+                                Toast.LENGTH_LONG).show()
                         }
+                    }else{
+                        Toast.makeText(holder.itemView.context,"Error => No Response Server.",
+                            Toast.LENGTH_LONG).show()
                     }
                 }
 

@@ -2,6 +2,7 @@ package com.example.imagery_vr.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -70,37 +71,35 @@ class AuthLogin : AppCompatActivity() {
                 tv_error.setText(" ")
                 val req     = tx_username.text.toString() + ">>" + tx_passwrod.text.toString()
                 val enco    = encryption().encob64(req)
-                apis.login(enco).enqueue(object : Callback<response>{
-                    override fun onResponse(call: Call<response>, response: Response<response>) {
-                        if(response.isSuccessful){
-                            response.body()?.let {
-                                try {
-                                    val jsonstr = encryption().decob64(it.data)
-                                    val jsonarr = encryption().splitter(jsonstr)
-                                    val userdata = Gson().fromJson(jsonarr[1],users::class.java)
-
-                                    if (it.status == 0){
-                                        savedata(userdata)
-                                        tv_error.setText("")
-                                        startActivity(Intent(this@AuthLogin,Dashboard::class.java))
-                                    }else if (it.status == 2){
-                                        savedata(userdata)
-                                        tv_error.setText("")
-                                        startActivity(Intent(this@AuthLogin,Survey::class.java))
-                                    }else{
-                                        tv_error.setText(jsonarr[0])
-                                    }
-                                }catch (e : Exception){
-                                    tv_error.setText("Username atau Password Salah. ${e.message}")
+                apis.login(enco).enqueue(object : Callback<List<response>>{
+                    override fun onResponse(
+                        call: Call<List<response>?>,
+                        response: Response<List<response>?>
+                    ) {
+                        if (response.isSuccessful){
+                            val res = response.body()
+                            if(res != null ){
+                                if (res[0].status != 0){
+                                    val deco = encryption().decob64(res[0].data)
+                                    val arr = encryption().splitter(deco)
+                                    val userdata = Gson().fromJson(arr[1],users::class.java)
+                                    savedata(userdata)
+                                    startActivity(Intent(this@AuthLogin, Dashboard::class.java))
+                                    finish()
+                                }else {
+                                    tv_error.text = "Username atau Password Salah."
                                 }
                             }
                         }else{
-                            tv_error.setText("Error res : ${response.raw()}")
+                            tv_error.text = "Server Tidak Merespon. \n Silahkan Coba Lagi"
                         }
                     }
 
-                    override fun onFailure(call: Call<response>, t: Throwable) {
-                        tv_error.setText("Error Fail : ${t.message}")
+                    override fun onFailure(
+                        call: Call<List<response>?>,
+                        t: Throwable
+                    ) {
+                        tv_error.text = "Error => ${t.toString()}"
                     }
 
                 })
@@ -123,10 +122,8 @@ class AuthLogin : AppCompatActivity() {
         dse.putString("username",data.username)
         dse.putString("nama",data.nama)
         dse.putInt("bidang_id",data.id_bidang)
+        dse.putInt("survey_count",data.survey_count)
         dse.apply()
-
-        Toast.makeText(this@AuthLogin,"Selamat Datang ${data.username} di IMAGERY.",Toast.LENGTH_LONG).show()
-        onDestroy()
     }
 
 }

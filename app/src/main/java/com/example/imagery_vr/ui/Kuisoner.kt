@@ -115,7 +115,12 @@ class Kuisoner : AppCompatActivity() {
                     if(response.isSuccessful){
                         val data = response.body()
                         if(data != null){
-                            Toast.makeText(this@Kuisoner,data.msg, Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@Kuisoner, Kuisoner_Hasil::class.java).apply {
+                                putExtra("skor",data.skor)
+                                putExtra("kategori",data.kategori)
+                            }
+                            Toast.makeText(this@Kuisoner,data.skor.toString(), Toast.LENGTH_LONG).show()
+                            startActivity(intent)
                         }
                     }
                 }

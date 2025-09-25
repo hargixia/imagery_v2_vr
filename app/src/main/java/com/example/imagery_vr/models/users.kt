@@ -11,5 +11,6 @@ data class users(
     val jenis_kelamin   : String,
     val id_bidang       : Int,
     val foto            : String,
-    val sc              : String
+    val sc              : String,
+    val survey_count    : Int
 )

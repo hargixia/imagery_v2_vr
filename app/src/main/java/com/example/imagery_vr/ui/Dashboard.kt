@@ -18,7 +18,7 @@ class Dashboard : AppCompatActivity() {
 
     private lateinit var db_tv1             : TextView
     private lateinit var btn_logout         : Button
-    private lateinit var btn_test           : Button
+    private lateinit var btn_survey         : Button
     private lateinit var btn_materi         : Button
     private lateinit var ds                 : SharedPreferences
 
@@ -34,19 +34,24 @@ class Dashboard : AppCompatActivity() {
         ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
         val ds_nama     = ds.getString("nama","user")
         val ds_id       = ds.getInt("user_id",0)
+        val survey_count= ds.getInt("survey_count",0)
 
         db_tv1          = findViewById(R.id.db_tv1)
         btn_logout      = findViewById(R.id.db_logout_btn)
-        btn_test        = findViewById(R.id.db_btn_test)
+        btn_survey        = findViewById(R.id.db_btn_survey)
         btn_materi      = findViewById(R.id.db_btn_materi)
 
-        db_tv1.text = "Dashboard : $ds_nama"
+        db_tv1.text = "Nama User : $ds_nama"
+
+        if (survey_count > 2){
+            startActivity(Intent(this@Dashboard, Survey::class.java))
+        }
 
         btn_logout.setOnClickListener {
             logout()
         }
 
-        btn_test.setOnClickListener {
+        btn_survey.setOnClickListener {
             startActivity(Intent(this@Dashboard, Survey::class.java))
         }
 

@@ -5,6 +5,7 @@ import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
+import com.example.imagery_vr.models.survey_response
 import com.example.imagery_vr.models.survey_soal
 import retrofit2.Call
 import retrofit2.http.GET
@@ -12,7 +13,7 @@ import retrofit2.http.Path
 
 interface api_services {
     @GET("/login/{data}")
-    fun login(@Path("data") data : String): retrofit2.Call<response>
+    fun login(@Path("data") data : String): retrofit2.Call<List<response>>
 
     @GET("/register/{data}")
     fun register(@Path("data") data : String): retrofit2.Call<response>
@@ -27,7 +28,7 @@ interface api_services {
     fun getSurveyPertanyaan() : Call<List<survey_soal>>
 
     @GET("/survey-jawaban/{data}")
-    fun getSurveyJawaban(@Path("data") data : String) : retrofit2.Call<response>
+    fun getSurveyJawaban(@Path("data") data : String) : retrofit2.Call<survey_response>
 
     @GET("/kuisoner-cek/{data}")
     fun getKuisonerCek(@Path("data") data : String) : retrofit2.Call<kuisoner_cek>

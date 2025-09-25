@@ -61,7 +61,7 @@ class Materi_Detail : AppCompatActivity() {
 
         btn_kuisoner.setOnClickListener {
             val intent = Intent(this@Materi_Detail, Kuisoner::class.java).apply {
-                putExtra("mode","PreTest")
+                putExtra("mode","PostTest")
                 putExtra("m_id",id)
                 putExtra("m_judul",judul)
             }

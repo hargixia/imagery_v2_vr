@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.Dashboard"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/Theme.Material3.Light"
+    android:background="@color/sporty_light_grey_bg">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout_dashboard"
@@ -69,54 +71,189 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/db_tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Dashboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_dashboard" />
-
-    <Button
-        android:id="@+id/db_btn_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Test Survey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.314"
-        app:layout_constraintStart_toEndOf="@+id/db_btn_materi"
-        app:layout_constraintTop_toBottomOf="@+id/db_tv1"
-        app:layout_constraintVertical_bias="0.001" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/db_btn_materi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="52dp"
-        android:backgroundTint="@color/u_navy"
-        android:text="Materi"
-        android:textColorLink="#C83232"
-        app:backgroundTint="#8C2020"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout_dashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/db_tv1"
-        app:layout_constraintVertical_bias="0.001" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dashboard_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/u_navy"
-        android:paddingVertical="12dp"
-        android:text="Apa Itu IMAGERY"
-        android:textColor="@color/sporty_text_on_dark"
-        app:cornerRadius="8dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_welcome_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Selamat Datang, \n Penggemar Olahraga!"
+                android:textColor="@color/sporty_text_dark"
+                android:textSize="23dp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="24dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/db_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Dashboard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.116"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar_layout_dashboard" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/sporty_card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ringkasan Aktivitas Harian"
+                        android:textColor="@color/u_navy"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lacak kemajuan Anda dan tetap termotivasi!"
+                        android:textColor="@color/sporty_text_dark"
+                        android:textSize="14sp" />
+
+                    <ProgressBar
+                        android:id="@+id/pb_daily_progress"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:progress="75"
+                        android:progressTint="@color/sporty_accent_orange"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:backgroundTint="@color/sporty_card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tindakan Cepat"
+                        android:textColor="@color/u_navy"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_start_activity"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="Mulai Aktivitas Baru"
+                            android:textColor="@color/sporty_text_on_dark"
+                            android:backgroundTint="@color/sporty_accent_orange"
+                            app:cornerRadius="8dp"
+                            android:paddingVertical="12dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_view_history"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lihat Riwayat"
+                            android:textColor="@color/u_navy"
+                            android:backgroundTint="@color/white"
+                            app:strokeColor="@color/u_navy"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="8dp"
+                            android:paddingVertical="12dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dashboard_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/u_navy"
+                android:paddingVertical="12dp"
+                android:text="Apa Itu IMAGERY"
+                android:textSize="20dp"
+                android:textColor="@color/sporty_text_on_dark"
+                app:cornerRadius="8dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/db_btn_materi"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/u_navy"
+                    android:paddingVertical="12dp"
+                    android:text="Materi"
+                    android:textSize="16dp"
+                    android:textColor="@color/sporty_text_on_dark"
+                    app:cornerRadius="8dp"
+                    android:layout_marginEnd="10dp"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/db_btn_survey"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/u_navy"
+                    android:paddingVertical="12dp"
+                    android:text="Beri Kami Penilaian"
+                    android:textColor="@color/sporty_text_on_dark"
+                    app:cornerRadius="8dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
