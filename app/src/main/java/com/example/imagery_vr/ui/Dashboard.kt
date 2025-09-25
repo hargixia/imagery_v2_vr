@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -14,12 +16,14 @@ import com.example.imagery_vr.MainActivity
 import com.example.imagery_vr.R
 import java.time.LocalDate
 
+@Suppress("DEPRECATION")
 class Dashboard : AppCompatActivity() {
 
     private lateinit var db_tv1             : TextView
     private lateinit var btn_logout         : Button
     private lateinit var btn_survey         : Button
     private lateinit var btn_materi         : Button
+    private lateinit var btn_about          : Button
     private lateinit var ds                 : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +42,9 @@ class Dashboard : AppCompatActivity() {
 
         db_tv1          = findViewById(R.id.db_tv1)
         btn_logout      = findViewById(R.id.db_logout_btn)
-        btn_survey        = findViewById(R.id.db_btn_survey)
+        btn_survey      = findViewById(R.id.db_btn_survey)
         btn_materi      = findViewById(R.id.db_btn_materi)
+        btn_about       = findViewById(R.id.db_btn_about)
 
         db_tv1.text = "Nama User : $ds_nama"
 
@@ -58,6 +63,16 @@ class Dashboard : AppCompatActivity() {
         btn_materi.setOnClickListener {
             startActivity(Intent(this@Dashboard, materi::class.java))
         }
+
+        btn_about.setOnClickListener {
+            startActivity(Intent(this@Dashboard,About::class.java))
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        onDestroy()
     }
 
     fun logout(){

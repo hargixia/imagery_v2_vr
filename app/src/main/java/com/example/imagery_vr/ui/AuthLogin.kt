@@ -120,6 +120,7 @@ class AuthLogin : AppCompatActivity() {
         dse.putInt("login_status",1)
         dse.putInt("user_id",data.id)
         dse.putString("username",data.username)
+        dse.putString("user_jk",data.jenis_kelamin)
         dse.putString("nama",data.nama)
         dse.putInt("bidang_id",data.id_bidang)
         dse.putInt("survey_count",data.survey_count)

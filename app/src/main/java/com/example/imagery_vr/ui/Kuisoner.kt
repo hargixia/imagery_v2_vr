@@ -121,6 +121,8 @@ class Kuisoner : AppCompatActivity() {
                             }
                             Toast.makeText(this@Kuisoner,data.skor.toString(), Toast.LENGTH_LONG).show()
                             startActivity(intent)
+                        }else{
+
                         }
                     }
                 }

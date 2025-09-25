@@ -70,6 +70,8 @@ class adapter_materi (
                                     putExtra("m_judul",item.judul)
                                 }
                                 holder.itemView.context.startActivity(intent)
+                                Toast.makeText(holder.itemView.context,"Silahkan Melakukan Pretest Terlebih Dahulu.",
+                                    Toast.LENGTH_SHORT).show()
                             }else if(isData.status == 1){
                                 val intent = Intent(holder.itemView.context, Materi_Detail::class.java)
                                     .apply {

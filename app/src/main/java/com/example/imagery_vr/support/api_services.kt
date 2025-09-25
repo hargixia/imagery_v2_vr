@@ -5,6 +5,7 @@ import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
+import com.example.imagery_vr.models.perkembangan_res
 import com.example.imagery_vr.models.survey_response
 import com.example.imagery_vr.models.survey_soal
 import retrofit2.Call
@@ -38,4 +39,7 @@ interface api_services {
 
     @GET("/kuisoner-jawaban/{data}")
     fun getKuisonerJawaban(@Path("data") data : String) : retrofit2.Call<kuisoner_response>
+
+    @GET("/perkembangan/{data}")
+    fun getPerkembangan(@Path("data") data : String) : Call<perkembangan_res>
 }

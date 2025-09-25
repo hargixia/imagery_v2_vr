@@ -43,12 +43,15 @@ class MainActivity : AppCompatActivity() {
             val ds_login_stat   = ds.getInt("login_status",0)
 
             if(ds_login_stat == 0 || ndate.toString() == ds_login_exp){
+                val dse         = ds.edit()
+                dse.clear()
+                dse.apply()
                 startActivity(Intent(this@MainActivity,AuthLogin::class.java))
             }else{
                 startActivity(Intent(this@MainActivity,Dashboard::class.java))
             }
 
-            Toast.makeText(this@MainActivity,"ref : ${ds_login_stat} \n ${ndate.toString()} == ${ds_login_exp}",Toast.LENGTH_LONG).show()
+            //Toast.makeText(this@MainActivity,"ref : ${ds_login_stat} \n ${ndate.toString()} == ${ds_login_exp}",Toast.LENGTH_LONG).show()
 
         },3000L)
     }

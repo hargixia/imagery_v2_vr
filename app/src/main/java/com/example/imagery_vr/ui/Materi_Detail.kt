@@ -1,6 +1,7 @@
 package com.example.imagery_vr.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -25,11 +26,12 @@ import retrofit2.Response
 
 class Materi_Detail : AppCompatActivity() {
 
-    private lateinit var tv_judul       : TextView
-    private lateinit var tv_desc        : TextView
-    private lateinit var rv_1           : RecyclerView
-    private lateinit var btn_kuisoner   : Button
-    private lateinit var adapter        : adapter_mater_detail
+    private lateinit var tv_judul           : TextView
+    private lateinit var tv_desc            : TextView
+    private lateinit var rv_1               : RecyclerView
+    private lateinit var btn_kuisoner       : Button
+    private lateinit var btn_perkembangan   : Button
+    private lateinit var adapter            : adapter_mater_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +45,15 @@ class Materi_Detail : AppCompatActivity() {
 
         val apis = retrofit.instance.create(api_services::class.java)
 
-        val id      = intent.getIntExtra("m_id",0)
-        val judul   = intent.getStringExtra("m_judul")
-        val desc    = intent.getStringExtra("m_desc")
+        val id              = intent.getIntExtra("m_id",0)
+        val judul           = intent.getStringExtra("m_judul")
+        val desc            = intent.getStringExtra("m_desc")
 
-        tv_judul    = findViewById(R.id.md_Judul)
-        tv_desc     = findViewById(R.id.md_desc)
-        rv_1        = findViewById(R.id.md_rv_1)
-        btn_kuisoner= findViewById(R.id.md_kuisoner_btn)
+        tv_judul            = findViewById(R.id.md_Judul)
+        tv_desc             = findViewById(R.id.md_desc)
+        rv_1                = findViewById(R.id.md_rv_1)
+        btn_kuisoner        = findViewById(R.id.md_kuisoner_btn)
+        btn_perkembangan    = findViewById(R.id.md_btn_perkembangan)
 
         tv_judul.setText(judul)
         tv_desc.setText(desc)
@@ -62,6 +65,14 @@ class Materi_Detail : AppCompatActivity() {
         btn_kuisoner.setOnClickListener {
             val intent = Intent(this@Materi_Detail, Kuisoner::class.java).apply {
                 putExtra("mode","PostTest")
+                putExtra("m_id",id)
+                putExtra("m_judul",judul)
+            }
+            startActivity(intent)
+        }
+
+        btn_perkembangan.setOnClickListener {
+            val intent = Intent(this@Materi_Detail, Perkembangan::class.java).apply {
                 putExtra("m_id",id)
                 putExtra("m_judul",judul)
             }
@@ -86,7 +97,7 @@ class Materi_Detail : AppCompatActivity() {
                 call: Call<List<materi_detail_list>?>,
                 t: Throwable
             ) {
-                //tv_desc.setText(t.toString())
+                Toast.makeText(this@Materi_Detail,"Error => ${t.message.toString()}", Toast.LENGTH_LONG).show()
             }
 
         })
