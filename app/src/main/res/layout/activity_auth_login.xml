@@ -31,7 +31,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="32dp"
-                android:background="@mipmap/ic_logo_new"
+                android:background="@mipmap/ic_logo_2"
                 android:padding="210dp"
                 app:contentDescription="Success Icon"
                 app:layout_constraintEnd_toEndOf="parent"

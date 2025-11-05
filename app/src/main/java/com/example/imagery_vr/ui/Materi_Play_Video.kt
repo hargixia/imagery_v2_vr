@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.VideoView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -67,6 +69,17 @@ class Materi_Play_Video : AppCompatActivity() {
         exoplayer.prepare()
 
         startCountdown(11000,1000)
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                exoplayer.stop()
+                videoplayer.player?.stop()
+                mediasesion.release()
+                finish()
+                Toast.makeText(this@Materi_Play_Video,"Video Selesai", Toast.LENGTH_SHORT).show()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this@Materi_Play_Video,callback)
     }
 
     private fun startCountdown(totalTimeMillis: Long, intervalMillis: Long) {
