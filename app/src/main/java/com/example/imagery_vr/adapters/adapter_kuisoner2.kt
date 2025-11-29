@@ -11,22 +11,24 @@ import com.example.imagery_vr.R
 import com.example.imagery_vr.models.kuisoner_jawaban
 import com.example.imagery_vr.models.kuisoner_pertanyaan_items
 
-class adapter_kuisoner (
+class adapter_kuisoner2 (
     private val data        : List<kuisoner_pertanyaan_items>,
     private val id_user     : Int,
     private val id_materi   : Int,
     private val dataJawaban :(List<kuisoner_jawaban>) -> Unit
-): RecyclerView.Adapter<adapter_kuisoner.viewHolder>(){
+): RecyclerView.Adapter<adapter_kuisoner2.viewHolder>(){
 
     private val jawab : MutableList<kuisoner_jawaban> = mutableListOf()
 
     class viewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val itemNum     : TextView      = itemView.findViewById(R.id.sci_num)
-        val itemText    : TextView      = itemView.findViewById(R.id.sci_text_1)
-        val itemOpsiG   : RadioGroup    = itemView.findViewById(R.id.sci_rg_1)
-        val opsi1       : RadioButton   = itemView.findViewById(R.id.sci_rg_op1)
-        val opsi2       : RadioButton   = itemView.findViewById(R.id.sci_rg_op2)
-        val opsi3       : RadioButton   = itemView.findViewById(R.id.sci_rg_op3)
+        val itemNum     : TextView      = itemView.findViewById(R.id.sci2_num)
+        val itemText    : TextView      = itemView.findViewById(R.id.sci2_text_1)
+        val itemOpsiG   : RadioGroup    = itemView.findViewById(R.id.sci2_rg_1)
+        val opsi1       : RadioButton   = itemView.findViewById(R.id.sci2_rg_op1)
+        val opsi2       : RadioButton   = itemView.findViewById(R.id.sci2_rg_op2)
+        val opsi3       : RadioButton   = itemView.findViewById(R.id.sci2_rg_op3)
+        val opsi4       : RadioButton   = itemView.findViewById(R.id.sci2_rg_op4)
+        val opsi5       : RadioButton   = itemView.findViewById(R.id.sci2_rg_op5)
     }
 
     override fun onCreateViewHolder(
@@ -34,7 +36,7 @@ class adapter_kuisoner (
         viewType: Int
     ): viewHolder {
         val current = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_item_soal_1,parent,false)
+            .inflate(R.layout.card_item_soal_2,parent,false)
         return viewHolder(current)
     }
 
@@ -52,19 +54,33 @@ class adapter_kuisoner (
         holder.itemText.text = currentItem.soal
 
         holder.opsi1.setOnClickListener {
-            opsi = 1
+            opsi = 0
             jawab[position] = kuisoner_jawaban(currentItem.id,id_user,id_materi,currentItem.id,opsi)
             dataJawaban(jawab)
         }
 
         holder.opsi2.setOnClickListener {
-            opsi = 2
+            opsi = 1
             jawab[position] = kuisoner_jawaban(currentItem.id,id_user,id_materi,currentItem.id,opsi)
             dataJawaban(jawab)
         }
 
         holder.opsi3.setOnClickListener {
+            opsi = 2
+            jawab[position] = kuisoner_jawaban(currentItem.id,id_user,id_materi,currentItem.id,opsi)
+            dataJawaban(jawab)
+            //Toast.makeText(holder.itemView.context, ">> $position " + jawab[position].value, Toast.LENGTH_SHORT).show()
+        }
+
+        holder.opsi4.setOnClickListener {
             opsi = 3
+            jawab[position] = kuisoner_jawaban(currentItem.id,id_user,id_materi,currentItem.id,opsi)
+            dataJawaban(jawab)
+            //Toast.makeText(holder.itemView.context, ">> $position " + jawab[position].value, Toast.LENGTH_SHORT).show()
+        }
+
+        holder.opsi5.setOnClickListener {
+            opsi = 4
             jawab[position] = kuisoner_jawaban(currentItem.id,id_user,id_materi,currentItem.id,opsi)
             dataJawaban(jawab)
             //Toast.makeText(holder.itemView.context, ">> $position " + jawab[position].value, Toast.LENGTH_SHORT).show()

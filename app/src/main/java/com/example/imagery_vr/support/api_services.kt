@@ -41,5 +41,5 @@ interface api_services {
     fun getKuisonerJawaban(@Path("data") data : String) : Call<List<kuisoner_response>>
 
     @GET("/api/perkembangan/{data}")
-    fun getPerkembangan(@Path("data") data : String) : Call<perkembangan_res>
+    fun getPerkembangan(@Path("data") data : String) : Call<List<perkembangan_res>>
 }

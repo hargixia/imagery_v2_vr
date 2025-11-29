@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
 import com.example.imagery_vr.adapters.adapter_kuisoner
+import com.example.imagery_vr.adapters.adapter_kuisoner2
 import com.example.imagery_vr.models.kuisoner_jawaban
 import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
@@ -35,6 +36,7 @@ class Kuisoner : AppCompatActivity() {
     private lateinit var ds             : SharedPreferences
 
     private lateinit var adapter        : adapter_kuisoner
+    private lateinit var adapter2       : adapter_kuisoner2
 
     private var k_jawaban               : List<kuisoner_jawaban> = emptyList()
 
@@ -52,6 +54,7 @@ class Kuisoner : AppCompatActivity() {
         val idm         = intent.getIntExtra("m_id",0)
         val jm          = intent.getStringExtra("m_judul")
         val mode_m      = intent.getStringExtra("mode")
+        val app_val     = intent.getIntExtra("app_val",1)
 
         val user_id     = ds.getInt("user_id",0)
         val user_name   = ds.getString("nama","user")
@@ -85,11 +88,17 @@ class Kuisoner : AppCompatActivity() {
                 if(response.isSuccessful){
                     val parcel = response.body()
                     if(parcel != null){
-                        adapter = adapter_kuisoner(parcel[0].res,user_id,idm){jawabans ->
-                            k_jawaban = jawabans
+                        if(app_val == 2){
+                            adapter2 = adapter_kuisoner2(parcel[0].res,user_id,idm){ jawabans ->
+                                k_jawaban = jawabans
+                            }
+                            rv1.adapter = adapter2
+                        }else{
+                            adapter = adapter_kuisoner(parcel[0].res,user_id,idm){jawabans ->
+                                k_jawaban = jawabans
+                            }
+                            rv1.adapter = adapter
                         }
-                        rv1.adapter = adapter
-
                     }else{
                         Toast.makeText(this@Kuisoner,"Null", Toast.LENGTH_LONG).show()
                     }

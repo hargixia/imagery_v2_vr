@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.Material3.Light"
+    android:background="@color/sporty_light_grey_bg"
     tools:context=".ui.Kuisoner_Hasil">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -145,7 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/kh_tx_nama"
-                            android:text="Nama : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:layout_marginBottom="10dp"
                             />
@@ -166,7 +168,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/kh_tx_materi"
-                            android:text="Materi : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:layout_marginBottom="10dp"
                             />
@@ -187,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/kh_tx_hari"
-                            android:text="Hari : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:layout_marginBottom="10dp"
                             />
@@ -208,7 +210,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/kh_tx_tanggal"
-                            android:text="Tanggal : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:layout_marginBottom="10dp"
                             />
@@ -289,6 +291,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:cornerRadius="8dp"
+                    android:visibility="invisible"
                     />
             </LinearLayout>
 

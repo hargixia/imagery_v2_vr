@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMAGERY_VR">
         <activity
+            android:name=".ui.Materi_Play_teks"
+            android:exported="false" />
+        <activity
             android:name=".ui.Perkembangan"
             android:exported="false" />
         <activity
@@ -37,8 +40,8 @@
         <activity
             android:name=".ui.Materi_Play_Video"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="sensorLandscape"
             android:exported="false"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.Fullscreen" />
         <activity
             android:name=".Materi_Play_Video"

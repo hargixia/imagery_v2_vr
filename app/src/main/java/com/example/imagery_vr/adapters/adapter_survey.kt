@@ -1,14 +1,11 @@
 package com.example.imagery_vr.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
 import com.example.imagery_vr.models.survey_jawaban
@@ -34,7 +31,7 @@ class adapter_survey (
         viewType: Int
     ): viewHolder {
         val current = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_item_survey,parent,false)
+            .inflate(R.layout.card_item_soal_1,parent,false)
         return viewHolder(current)
     }
 

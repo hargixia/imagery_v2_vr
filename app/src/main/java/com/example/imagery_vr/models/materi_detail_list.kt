@@ -9,10 +9,10 @@ data class materi_detail_list(
 )
 
 data class materi_detail_items(
-    @SerializedName("id")val id             : Int,
-    @SerializedName("id_materi")val idm     : String,
-    @SerializedName("desc")val desc         : String,
-    @SerializedName("audio")val audio       : String,
-    @SerializedName("video")val video       : String,
-    @SerializedName("img")val img           : String,
+    @SerializedName("id")val id                 : Int,
+    @SerializedName("judul")val judul           : String,
+    @SerializedName("deskripsi")val deskripsi   : String,
+    @SerializedName("tipe")val tipe             : String,
+    @SerializedName("isi")val isi               : String,
+    @SerializedName("id_materi")val idm         : Int,
 )

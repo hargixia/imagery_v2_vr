@@ -25,7 +25,8 @@ import retrofit2.Response
 
 class adapter_materi (
     private val data        : List<materi_items>,
-    private val user_id     : Int
+    private val user_id     : Int,
+    private val apval       : Int
 ): RecyclerView.Adapter<adapter_materi.ViewHolder>(){
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,6 +69,7 @@ class adapter_materi (
                                     putExtra("mode",isData[0].msg)
                                     putExtra("m_id",item.id )
                                     putExtra("m_judul",item.judul)
+                                    putExtra("app_val",apval)
                                 }
                                 holder.itemView.context.startActivity(intent)
                                 Toast.makeText(holder.itemView.context,"Silahkan Melakukan Pretest Terlebih Dahulu.",
@@ -78,6 +80,7 @@ class adapter_materi (
                                         putExtra("m_id",item.id)
                                         putExtra("m_judul",item.judul)
                                         putExtra("m_desc",item.desc)
+                                        putExtra("app_val",apval)
                                     }
                                 holder.itemView.context.startActivity(intent)
                             }else{

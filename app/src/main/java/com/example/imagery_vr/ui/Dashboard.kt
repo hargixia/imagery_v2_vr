@@ -23,6 +23,7 @@ class Dashboard : AppCompatActivity() {
     private lateinit var btn_logout         : Button
     private lateinit var btn_survey         : Button
     private lateinit var btn_materi1        : Button
+    private lateinit var btn_materi2        : Button
     private lateinit var btn_about          : Button
     private lateinit var ds                 : SharedPreferences
 
@@ -42,8 +43,8 @@ class Dashboard : AppCompatActivity() {
 
         db_tv1          = findViewById(R.id.db_tv1)
         btn_logout      = findViewById(R.id.db_logout_btn)
-        btn_survey      = findViewById(R.id.db_btn_survey)
         btn_materi1      = findViewById(R.id.db_btn_materi1)
+        btn_materi2      = findViewById(R.id.db_btn_materi2)
         btn_about       = findViewById(R.id.db_btn_about)
 
         db_tv1.text = "Nama User : $ds_nama"
@@ -56,14 +57,18 @@ class Dashboard : AppCompatActivity() {
             logout()
         }
 
-        btn_survey.setOnClickListener {
-            startActivity(Intent(this@Dashboard, Survey::class.java))
-        }
-
         btn_materi1.setOnClickListener {
             val intent = Intent(this@Dashboard, materi::class.java).apply {
                 putExtra("App","App1")
                 putExtra("AppVal",1)
+            }
+            startActivity(intent)
+        }
+
+        btn_materi2.setOnClickListener {
+            val intent = Intent(this@Dashboard, materi::class.java).apply {
+                putExtra("App","App2")
+                putExtra("AppVal",2)
             }
             startActivity(intent)
         }

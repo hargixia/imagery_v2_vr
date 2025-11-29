@@ -50,7 +50,7 @@ class materi : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
 
         val apis = retrofit.instance.create(api_services::class.java)
-        val req     = "m>>a"
+        val req     = "m>>"+ appVal.toString()
         val enco    = encryption().encob64(req)
         apis.getMateri(enco).enqueue(object : Callback<List<materi_list>>{
             override fun onResponse(
@@ -60,7 +60,7 @@ class materi : AppCompatActivity() {
                 if(response.isSuccessful){
                     val data = response.body()
                     if(data != null){
-                        adapter = adapter_materi(data[0].res, user_id)
+                        adapter = adapter_materi(data[0].res, user_id,appVal)
                         rv.adapter =adapter
                         //tv1.text = data.toString()
                     }

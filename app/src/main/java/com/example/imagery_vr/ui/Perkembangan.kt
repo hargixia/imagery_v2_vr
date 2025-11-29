@@ -44,6 +44,8 @@ class Perkembangan : AppCompatActivity() {
     private lateinit var t_userh_n          : TextView
     private lateinit var t_userh_v          : TextView
 
+    private lateinit var t_status           : TextView
+
     private lateinit var grafik1            : LineChart
     private lateinit var rv1                : RecyclerView
     private lateinit var adapter            : adapter_perkembangan
@@ -80,26 +82,30 @@ class Perkembangan : AppCompatActivity() {
         t_userh_n           = findViewById(R.id.p_u_high_nama)
         t_userh_v           = findViewById(R.id.p_u_high_val)
 
+        t_status            = findViewById(R.id.p_status)
+
         grafik1             = findViewById(R.id.p_chart1)
 
         rv1                 = findViewById(R.id.p_rv1)
         rv1.layoutManager   = LinearLayoutManager(this)
 
-        val str     = "pk>>" + user_id.toString() + ">>" + materi_id.toString()
+        val str     = "pu>>" + user_id.toString() + ">>" + materi_id.toString()
         val parcel  = encryption().encob64(str)
-        apis.getPerkembangan(parcel).enqueue(object : Callback<perkembangan_res>{
+        apis.getPerkembangan(parcel).enqueue(object : Callback<List<perkembangan_res>>{
             override fun onResponse(
-                call: Call<perkembangan_res?>,
-                response: Response<perkembangan_res?>
+                call: Call<List<perkembangan_res>?>,
+                response: Response<List<perkembangan_res>?>
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()
                     if (data != null) {
-                        if (data.status == 0) {
+                        if (data[0].code == 200) {
 
                             val datas : ArrayList<Entry> = ArrayList()
-                            for(dp in data.data){
-                                datas.add(Entry(dp.id.toFloat(),dp.nilai))
+                            var i = 1
+                            for(dp in data[0].res[0].data){
+                                datas.add(Entry(i.toFloat(),dp.nilai))
+                                i += 1
                             }
                             val dataSet = LineDataSet(datas,"Perkembangan Dirimu")
                             dataSet.color = Color.BLUE
@@ -116,29 +122,31 @@ class Perkembangan : AppCompatActivity() {
                             grafik1.setPinchZoom(true)
                             grafik1.invalidate()
 
-                            adapter = adapter_perkembangan(data.data)
+                            adapter = adapter_perkembangan(data[0].res[0].data)
                             rv1.adapter = adapter
 
-                            t_judul.text    = data.judul
-                            t_nama.text     = data.nama
-                            t_umur.text     = data.umur
-                            t_jk.text       = data.gender
+                            t_judul.text    = data[0].res[0].judul
+                            t_nama.text     = ": " + data[0].res[0].nama
+                            t_umur.text     = ": " + data[0].res[0].umur + " Tahun"
+                            t_jk.text       = ": " + data[0].res[0].gender
 
-                            t_jdata.text    = "${data.t_jumlah.toInt().toString()}X Test"
-                            t_max.text      = data.t_max.toString()
-                            t_min.text      = data.t_min.toString()
-                            t_avg.text      = data.t_avg.toString()
-                            t_kat.text      = data.kategori.toString()
-                            t_last.text     = "${data.last_h}, ${data.last_w}"
+                            t_jdata.text    = ": " + "${data[0].res[0].t_jumlah.toInt().toString()}X Test"
+                            t_max.text      = ": " + data[0].res[0].t_max.toString()
+                            t_min.text      = ": " + data[0].res[0].t_min.toString()
+                            t_avg.text      = ": " + data[0].res[0].t_avg.toString()
+                            t_kat.text      = ": " + data[0].res[0].kategori.toString()
+                            t_last.text     = ": " + "${data[0].res[0].last_h}, ${data[0].res[0].last_w}"
 
-                            t_userh_n.text  = data.u_tn
-                            t_userh_v.text  = data.u_tv
+                            t_userh_n.text  = ": " + data[0].res[0].utinggi
+                            t_userh_v.text  = ": " + data[0].res[0].tinggi.toString()
 
-                        } else if (data.status == 1) {
+                            t_status.text   = ": " + data[0].res[0].status
+
+                        } else if (data[0].code == 404) {
                             startActivity(Intent(this@Perkembangan, materi::class.java))
                             Toast.makeText(this@Perkembangan, "Tidak Ada Data.", Toast.LENGTH_LONG)
                                 .show()
-                        } else if (data.status == 2) {
+                        } else if (data[0].code == 405) {
                             startActivity(Intent(this@Perkembangan, materi::class.java))
                             Toast.makeText(
                                 this@Perkembangan,
@@ -154,15 +162,19 @@ class Perkembangan : AppCompatActivity() {
                         ).show()
                     }
                 }
-
             }
 
             override fun onFailure(
-                call: Call<perkembangan_res?>,
+                call: Call<List<perkembangan_res>?>,
                 t: Throwable
             ) {
-                Toast.makeText(this@Perkembangan,"Error Sistem => ${t.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@Perkembangan,
+                    "Error: ${t.message.toString()}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
+
         })
     }
 }

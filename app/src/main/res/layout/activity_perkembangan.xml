@@ -111,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_nama"
-                            android:text="Nama"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -135,7 +135,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_umur"
-                            android:text="Umur"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -158,7 +158,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_gender"
-                            android:text="Jenis Kelamin"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -209,7 +209,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_ctest"
-                            android:text="Jumlah Data Test :"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -233,7 +233,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_maxTest"
-                            android:text="Nilai Tertinggi : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -257,7 +257,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_minTest"
-                            android:text="Nilai Terendah : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -280,7 +280,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_lastTest"
-                            android:text="Terakhir Test : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -303,7 +303,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_avgTest"
-                            android:text="Rata-Rata Nilai : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -326,7 +326,30 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_kategoriTest"
-                            android:text="Kategori : "
+                            android:text="-"
+                            android:textSize="16dp"
+                            android:textColor="@color/u_navy"
+                            android:layout_marginBottom="10dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:text="Status"
+                            android:textSize="16dp"
+                            android:textColor="@color/u_navy"
+                            android:layout_marginBottom="10dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/p_status"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -377,7 +400,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_u_high_nama"
-                            android:text="Username :"
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>
@@ -400,7 +423,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/p_u_high_val"
-                            android:text="Nilai Tertinggi : "
+                            android:text="-"
                             android:textSize="16dp"
                             android:textColor="@color/u_navy"
                             android:layout_marginBottom="10dp"/>

@@ -20,6 +20,7 @@ class adapter_perkembangan(
         val tv_2        : TextView  = itemView.findViewById(R.id.scp_text_2)
         val tv_3        : TextView  = itemView.findViewById(R.id.scp_text_3)
         val tv_4        : TextView  = itemView.findViewById(R.id.scp_text_4)
+        val tv_5        : TextView  = itemView.findViewById(R.id.scp_text_5)
     }
 
     override fun onCreateViewHolder(
@@ -35,11 +36,12 @@ class adapter_perkembangan(
         position: Int
     ) {
         val item = dataList[position]
-        holder.tv_no.text   = item.id.toString()
-        holder.tv_1.text    = item.nilai.toString()
-        holder.tv_2.text    = item.kategori.toString()
-        holder.tv_3.text    = item.hari
-        holder.tv_4.text    = item.waktu
+        holder.tv_no.text   = item.no.toString()
+        holder.tv_1.text    = "Nilai : " + item.nilai.toString()
+        holder.tv_2.text    = "Kategori : " + item.kategori
+        holder.tv_3.text    = item.hari + ", "
+        holder.tv_4.text    = item.tanggal
+        holder.tv_5.text    = item.tipe
     }
 
     override fun getItemCount(): Int {

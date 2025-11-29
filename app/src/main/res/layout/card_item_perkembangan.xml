@@ -27,11 +27,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scp_text_5"
+                android:text="Tipe"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,38 +49,46 @@
                     android:text="Skor : 000000"
                     android:textSize="18dp"
                     android:textStyle="bold"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="60dp"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/scp_text_2"
-                    android:text="Kategori : Baik"
+                    android:text="Kategori"
                     android:textSize="16dp"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
                     />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/scp_text_3"
-                android:text="Hari : "
-                android:textSize="16dp"
-                android:layout_marginBottom="5dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/scp_text_4"
-                android:text="Kategori : Baik"
-                android:textSize="16dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/scp_text_3"
+                    android:text="Hari"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/scp_text_4"
+                    android:text="tanggal"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="10dp"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 

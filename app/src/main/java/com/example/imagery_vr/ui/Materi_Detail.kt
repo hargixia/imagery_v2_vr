@@ -48,6 +48,7 @@ class Materi_Detail : AppCompatActivity() {
         val id              = intent.getIntExtra("m_id",0)
         val judul           = intent.getStringExtra("m_judul")
         val desc            = intent.getStringExtra("m_desc")
+        val app_val         = intent.getIntExtra("app_val",1)
 
         tv_judul            = findViewById(R.id.md_Judul)
         tv_desc             = findViewById(R.id.md_desc)
@@ -67,6 +68,7 @@ class Materi_Detail : AppCompatActivity() {
                 putExtra("mode","PostTest")
                 putExtra("m_id",id)
                 putExtra("m_judul",judul)
+                putExtra("app_val",app_val)
             }
             startActivity(intent)
         }

@@ -13,14 +13,16 @@ import com.example.imagery_vr.models.materi_detail_items
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.ui.Materi_Detail
 import com.example.imagery_vr.ui.Materi_Play_Video
+import com.example.imagery_vr.ui.Materi_Play_teks
 
 class adapter_mater_detail(
     private val data : List<materi_detail_items>
 ) : RecyclerView.Adapter<adapter_mater_detail.ViewHolder>() {
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val card    : CardView = itemView.findViewById(R.id.cmd_card)
-        val tv_desc : TextView = itemView.findViewById(R.id.cmd_tv_desc)
+        val card        : CardView = itemView.findViewById(R.id.cmd_card)
+        val tv_judul    : TextView = itemView.findViewById(R.id.cmd_tv_judul)
+        val tv_desc     : TextView = itemView.findViewById(R.id.cmd_tv_desc)
     }
 
     override fun onCreateViewHolder(
@@ -36,17 +38,26 @@ class adapter_mater_detail(
         position: Int
     ) {
         val item = data[position]
-        holder.tv_desc.text    = item.desc
+        holder.tv_judul.text    = item.judul
+        holder.tv_desc.text     = item.deskripsi
         holder.card.setOnClickListener {
-            val intent = Intent(holder.itemView.context, Materi_Play_Video::class.java)
+            if (item.tipe == "video"){
+                val intent = Intent(holder.itemView.context, Materi_Play_Video::class.java)
+                    .apply {
+                        putExtra("md2_id",item.id)
+                        putExtra("md2_desc",item.judul)
+                        putExtra("md2_video",item.isi)
+                    }
+                holder.itemView.context.startActivity(intent)
+            }else if (item.tipe == "teks"){
+            val intent = Intent(holder.itemView.context, Materi_Play_teks::class.java)
                 .apply {
-                    putExtra("md2_id",item.id)
-                    putExtra("md2_desc",item.desc)
-                    putExtra("md2_audio",item.audio)
-                    putExtra("md2_video",item.video)
-                    putExtra("md2_img",item.img)
+                    putExtra("md2_judul",item.judul)
+                    putExtra("md2_desc",item.deskripsi)
+                    putExtra("md2_isi",item.isi)
                 }
             holder.itemView.context.startActivity(intent)
+        }
         }
     }
 

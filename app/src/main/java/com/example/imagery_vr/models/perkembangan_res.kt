@@ -3,8 +3,12 @@ package com.example.imagery_vr.models
 import com.google.gson.annotations.SerializedName
 
 data class perkembangan_res(
-    val status      : Int,
-    val msg         : String,
+    @SerializedName("code") val code : Int,
+    @SerializedName("msg")  val msg  : String,
+    @SerializedName("res")  val res  : List<perkembangan_detail>
+)
+
+data class perkembangan_detail(
     val judul       : String,
     val nama        : String,
     val umur        : String,
@@ -16,16 +20,17 @@ data class perkembangan_res(
     val last_w      : String,
     val t_avg       : Float,
     val kategori    : String,
-    val data        : List<perkembangan_data_list>,
-    val u_tn        : String,
-    val u_tv        : String,
-    val u_tf        : String
+    val status      : String,
+    val tinggi      : Float,
+    val utinggi     : String,
+    val data        : List<perkembangan_data_list>
 )
 
 data class perkembangan_data_list(
-    @SerializedName("no")           val id          : Int,
+    @SerializedName("no")           val no          : Int,
     @SerializedName("nilai")        val nilai       : Float,
     @SerializedName("kategori")     val kategori    : String,
+    @SerializedName("tipe")         val tipe        : String,
     @SerializedName("hari")         val hari        : String,
-    @SerializedName("waktu")        val waktu       : String,
+    @SerializedName("tanggal")      val tanggal     : String,
 )
