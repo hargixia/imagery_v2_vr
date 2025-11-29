@@ -69,7 +69,7 @@ class AuthLogin : AppCompatActivity() {
                 tv_error.setText("Harap Isi Username dan Password nya...")
             }else{
                 tv_error.setText(" ")
-                val req     = tx_username.text.toString() + ">>" + tx_passwrod.text.toString()
+                val req     = "Login>>"+tx_username.text.toString() + ">>" + tx_passwrod.text.toString()
                 val enco    = encryption().encob64(req)
                 apis.login(enco).enqueue(object : Callback<List<response>>{
                     override fun onResponse(
@@ -91,7 +91,7 @@ class AuthLogin : AppCompatActivity() {
                                 }
                             }
                         }else{
-                            tv_error.text = "Server Tidak Merespon. \n Silahkan Coba Lagi"
+                            tv_error.text = "Server Tidak Merespon. \n Silahkan Coba Lagi ${response.toString()}"
                         }
                     }
 

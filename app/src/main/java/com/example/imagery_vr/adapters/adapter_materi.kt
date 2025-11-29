@@ -55,24 +55,24 @@ class adapter_materi (
 
             val req = "kc>>" + user_id + ">>" + item.id
             val enc = encryption().encob64(req)
-            holder.apis.getKuisonerCek(enc).enqueue(object : Callback<kuisoner_cek>{
+            holder.apis.getKuisonerCek(enc).enqueue(object : Callback<List<kuisoner_cek>>{
                 override fun onResponse(
-                    call: Call<kuisoner_cek?>,
-                    response: Response<kuisoner_cek?>
+                    call: Call<List<kuisoner_cek>?>,
+                    response: Response<List<kuisoner_cek>?>
                 ) {
                     if(response.isSuccessful){
                         val isData = response.body()
                         if (isData !=null){
-                            if(isData.status == 0){
+                            if(isData[0].code == 0){
                                 val intent = Intent(holder.itemView.context, Kuisoner::class.java).apply {
-                                    putExtra("mode",isData.msg)
+                                    putExtra("mode",isData[0].msg)
                                     putExtra("m_id",item.id )
                                     putExtra("m_judul",item.judul)
                                 }
                                 holder.itemView.context.startActivity(intent)
                                 Toast.makeText(holder.itemView.context,"Silahkan Melakukan Pretest Terlebih Dahulu.",
                                     Toast.LENGTH_SHORT).show()
-                            }else if(isData.status == 1){
+                            }else if(isData[0].code == 1){
                                 val intent = Intent(holder.itemView.context, Materi_Detail::class.java)
                                     .apply {
                                         putExtra("m_id",item.id)
@@ -81,7 +81,7 @@ class adapter_materi (
                                     }
                                 holder.itemView.context.startActivity(intent)
                             }else{
-                                Toast.makeText(holder.itemView.context,"Error => ${isData.msg}",
+                                Toast.makeText(holder.itemView.context,"Error => ${isData[0].msg}",
                                     Toast.LENGTH_LONG).show()
                             }
                         }else{
@@ -89,17 +89,19 @@ class adapter_materi (
                                 Toast.LENGTH_LONG).show()
                         }
                     }else{
-                        Toast.makeText(holder.itemView.context,"Error => No Response Server.",
+                        Toast.makeText(holder.itemView.context,"Error => No Response Server.\n ${response.code()}",
                             Toast.LENGTH_LONG).show()
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<kuisoner_cek?>,
+                    call: Call<List<kuisoner_cek>?>,
                     t: Throwable
                 ) {
-                    Toast.makeText(holder.itemView.context,"Error => ${t.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(holder.itemView.context,"Error => No Response Server.\n ${t.toString()}",
+                        Toast.LENGTH_LONG).show()
                 }
+
             })
         }
     }
@@ -108,3 +110,4 @@ class adapter_materi (
         return data.size
     }
 }
+

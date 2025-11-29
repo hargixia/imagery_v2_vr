@@ -13,33 +13,33 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface api_services {
-    @GET("/login/{data}")
+    @GET("/api/login/{data}")
     fun login(@Path("data") data : String): retrofit2.Call<List<response>>
 
-    @GET("/register/{data}")
+    @GET("/api/register/{data}")
     fun register(@Path("data") data : String): retrofit2.Call<response>
 
-    @GET("/materi")
-    fun getMateri(): Call<List<materi_list>>
+    @GET("/api/materi/{data}")
+    fun getMateri(@Path("data") data: String): Call<List<materi_list>>
 
-    @GET("/materi/detail/{data}")
+    @GET("/api/materi_detail/{data}")
     fun getMateriDetail(@Path("data") data : String) : retrofit2.Call<List<materi_detail_list>>
 
-    @GET("/survey-pertanyaan")
+    @GET("/api/survey-pertanyaan")
     fun getSurveyPertanyaan() : Call<List<survey_soal>>
 
-    @GET("/survey-jawaban/{data}")
+    @GET("/api/survey-jawaban/{data}")
     fun getSurveyJawaban(@Path("data") data : String) : retrofit2.Call<survey_response>
 
-    @GET("/kuisoner-cek/{data}")
-    fun getKuisonerCek(@Path("data") data : String) : retrofit2.Call<kuisoner_cek>
+    @GET("/api/kuisoner_cek/{data}")
+    fun getKuisonerCek(@Path("data") data : String) : Call<List<kuisoner_cek>>
 
-    @GET("/kuisoner-pertanyaan/{id}")
-    fun getKuisonerPertanyaan(@Path("id") id : String) : Call<List<kuisoner_pertanyaan>>
+    @GET("/api/kuisoner_pertanyaan/{data}")
+    fun getKuisonerPertanyaan(@Path("data") data : String) : Call<List<kuisoner_pertanyaan>>
 
-    @GET("/kuisoner-jawaban/{data}")
-    fun getKuisonerJawaban(@Path("data") data : String) : retrofit2.Call<kuisoner_response>
+    @GET("/api/kuisoner_jawab/{data}")
+    fun getKuisonerJawaban(@Path("data") data : String) : Call<List<kuisoner_response>>
 
-    @GET("/perkembangan/{data}")
+    @GET("/api/perkembangan/{data}")
     fun getPerkembangan(@Path("data") data : String) : Call<perkembangan_res>
 }

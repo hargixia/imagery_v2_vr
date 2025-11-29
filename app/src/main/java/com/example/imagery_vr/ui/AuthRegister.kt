@@ -107,7 +107,7 @@ class AuthRegister : AppCompatActivity() {
                                 tx_name.text.toString() + ">>" +
                                 tglL + ">>" +
                                 sgender + ">>" +
-                                "1 >> "+
+                                "1>>"+
                                 tx_cpass.text.toString()
 
                     apis.register(encryption().encob64(req)).enqueue(object : Callback<response>{

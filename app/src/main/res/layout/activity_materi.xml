@@ -62,9 +62,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Daftar Materi Imagery"
+        android:textAlignment="center"
+        android:textColor="@color/sporty_text_dark"
         android:textSize="26dp"
         android:textStyle="bold"
-        android:textColor="@color/sporty_text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,11 +74,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/materi_rv_1"
         android:layout_width="match_parent"
-        android:layout_height="589dp"
+        android:layout_height="619dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materi_tv_1"
-        app:layout_constraintVertical_bias="0.242"
-        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintVertical_bias="0.675"
         tools:listitem="@layout/card_item_materi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

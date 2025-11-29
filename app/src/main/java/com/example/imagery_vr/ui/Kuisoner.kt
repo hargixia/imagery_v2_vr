@@ -74,7 +74,10 @@ class Kuisoner : AppCompatActivity() {
 
         }
 
-        apis.getKuisonerPertanyaan(idm.toString()).enqueue(object : Callback<List<kuisoner_pertanyaan>>{
+        val req     = "kp>>" + idm.toString()
+        val enco    = encryption().encob64(req)
+
+        apis.getKuisonerPertanyaan(enco).enqueue(object : Callback<List<kuisoner_pertanyaan>>{
             override fun onResponse(
                 call: Call<List<kuisoner_pertanyaan>?>,
                 response: Response<List<kuisoner_pertanyaan>?>
@@ -82,13 +85,16 @@ class Kuisoner : AppCompatActivity() {
                 if(response.isSuccessful){
                     val parcel = response.body()
                     if(parcel != null){
-                        adapter = adapter_kuisoner(parcel,user_id,idm){jawabans ->
+                        adapter = adapter_kuisoner(parcel[0].res,user_id,idm){jawabans ->
                             k_jawaban = jawabans
                         }
                         rv1.adapter = adapter
+
                     }else{
                         Toast.makeText(this@Kuisoner,"Null", Toast.LENGTH_LONG).show()
                     }
+                }else{
+                    Toast.makeText(this@Kuisoner,"Err response => \n ${response.code().toString()}", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -102,37 +108,43 @@ class Kuisoner : AppCompatActivity() {
         })
 
         btn_kirim.setOnClickListener {
-            var req = "kj>>" + user_id.toString() + ">>" + idm.toString()
+            var req = "kj>>" + idm.toString() + ">>" + user_id.toString() + ">>" + mode_m
             for(i in k_jawaban){
-                req += ">>" + i.value
+                req += ">>" + i.id.toString() + "--" + i.value
             }
             val enc = encryption().encob64(req)
-            apis.getKuisonerJawaban(enc).enqueue(object : Callback<kuisoner_response>{
+            apis.getKuisonerJawaban(enc).enqueue(object : Callback<List<kuisoner_response>>{
                 override fun onResponse(
-                    call: Call<kuisoner_response?>,
-                    response: Response<kuisoner_response?>
+                    call: Call<List<kuisoner_response>?>,
+                    response: Response<List<kuisoner_response>?>
                 ) {
                     if(response.isSuccessful){
                         val data = response.body()
                         if(data != null){
-                            val intent = Intent(this@Kuisoner, Kuisoner_Hasil::class.java).apply {
-                                putExtra("skor",data.skor)
-                                putExtra("kategori",data.kategori)
+                            val intent = Intent(this@Kuisoner, Kuisoner_Hasil::class.java)
+                            data[0].res.forEach { item->
+                                intent.putExtra("total_nilai",item.total_nilai)
+                                intent.putExtra("nilai",item.nilai)
+                                intent.putExtra("rekomendasi",item.rekomendasi)
+                                intent.putExtra("kategori",item.kategori)
+                                intent.putExtra("tanggal",item.tanggal)
+                                intent.putExtra("hari",item.hari)
+                                intent.putExtra("materi",jm )
                             }
-                            Toast.makeText(this@Kuisoner,data.skor.toString(), Toast.LENGTH_LONG).show()
                             startActivity(intent)
                         }else{
-
+                            Toast.makeText(this@Kuisoner,"kosong", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
 
                 override fun onFailure(
-                    call: Call<kuisoner_response?>,
+                    call: Call<List<kuisoner_response>?>,
                     t: Throwable
                 ) {
-                    Toast.makeText(this@Kuisoner,"Error -> ${t.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Kuisoner,"error => ${t.message.toString()}", Toast.LENGTH_LONG).show()
                 }
+
             })
         }
 

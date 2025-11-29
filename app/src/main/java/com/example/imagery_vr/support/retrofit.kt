@@ -6,7 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object retrofit {
-    private const val BASE_URL = "https://linen-walrus-983142.hostingersite.com/"
+    private const val BASE_URL = "https://snow-turtle-672937.hostingersite.com/"
+    //private const val BASE_URL = "https://linen-walrus-983142.hostingersite.com/"
     //private const val BASE_URL = "http://10.72.1.120/"
 
     var gson: Gson = GsonBuilder()

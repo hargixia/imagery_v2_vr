@@ -15,6 +15,7 @@ import com.example.imagery_vr.R
 import com.example.imagery_vr.adapters.adapter_materi
 import com.example.imagery_vr.models.materi_list
 import com.example.imagery_vr.support.api_services
+import com.example.imagery_vr.support.encryption
 import com.example.imagery_vr.support.retrofit
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,14 +40,19 @@ class materi : AppCompatActivity() {
 
         ds              = getSharedPreferences("IMGV1",MODE_PRIVATE)
         val user_id     = ds.getInt("user_id",0)
+        val app         = intent.getStringExtra("App")
+        val appVal      = intent.getIntExtra("AppVal",0)
 
         tv1 = findViewById(R.id.materi_tv_1)
+        tv1.text = "Daftar Materi Imagery \n ${app}"
 
         rv = findViewById(R.id.materi_rv_1)
         rv.layoutManager = LinearLayoutManager(this)
 
         val apis = retrofit.instance.create(api_services::class.java)
-        apis.getMateri().enqueue(object : Callback<List<materi_list>>{
+        val req     = "m>>a"
+        val enco    = encryption().encob64(req)
+        apis.getMateri(enco).enqueue(object : Callback<List<materi_list>>{
             override fun onResponse(
                 call: Call<List<materi_list>?>,
                 response: Response<List<materi_list>?>
