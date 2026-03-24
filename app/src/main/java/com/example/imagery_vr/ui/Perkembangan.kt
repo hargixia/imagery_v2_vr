@@ -28,8 +28,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class Perkembangan : AppCompatActivity() {
-
-
     private lateinit var t_judul            : TextView
     private lateinit var t_nama             : TextView
     private lateinit var t_umur             : TextView
@@ -40,12 +38,9 @@ class Perkembangan : AppCompatActivity() {
     private lateinit var t_last             : TextView
     private lateinit var t_avg              : TextView
     private lateinit var t_kat              : TextView
-
     private lateinit var t_userh_n          : TextView
     private lateinit var t_userh_v          : TextView
-
     private lateinit var t_status           : TextView
-
     private lateinit var grafik1            : LineChart
     private lateinit var rv1                : RecyclerView
     private lateinit var adapter            : adapter_perkembangan
@@ -143,9 +138,10 @@ class Perkembangan : AppCompatActivity() {
                             t_status.text   = ": " + data[0].res[0].status
 
                         } else if (data[0].code == 404) {
-                            startActivity(Intent(this@Perkembangan, materi::class.java))
+                            startActivity(Intent(this@Perkembangan, Dashboard::class.java))
                             Toast.makeText(this@Perkembangan, "Tidak Ada Data.", Toast.LENGTH_LONG)
                                 .show()
+                            finish()
                         } else if (data[0].code == 405) {
                             startActivity(Intent(this@Perkembangan, materi::class.java))
                             Toast.makeText(

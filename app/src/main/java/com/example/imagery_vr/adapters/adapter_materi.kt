@@ -54,7 +54,7 @@ class adapter_materi (
         holder.tv_deskripsi.text    = item.desc
         holder.card.setOnClickListener {
 
-            val req = "kc>>" + user_id + ">>" + item.id
+            val req = "kc>>" + item.id + ">>" + user_id
             val enc = encryption().encob64(req)
             holder.apis.getKuisonerCek(enc).enqueue(object : Callback<List<kuisoner_cek>>{
                 override fun onResponse(

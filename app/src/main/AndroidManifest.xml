@@ -6,6 +6,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +22,19 @@
         android:roundIcon="@mipmap/ic_logo_2_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IMAGERY_VR">
+        <activity
+            android:name=".ui.Bluetooth_adapter"
+            android:exported="false" />
+        <activity
+            android:name=".bluetooth_connecter"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bluetooh_selector"
+            android:exported="false"
+            android:theme="@style/Theme.IMAGERY_VR" />
+        <activity
+            android:name=".ui.Materi_Play_audio"
+            android:exported="false" />
         <activity
             android:name=".ui.Materi_Play_teks"
             android:exported="false" />
@@ -66,10 +85,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.AuthRegister"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".ui.AuthLogin"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

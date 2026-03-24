@@ -9,7 +9,7 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">linen-walrus-983142.hostingersite.com</domain>
+        <domain includeSubdomains="true">snow-turtle-672937.hostingersite.com</domain>
         <trust-anchors>
             <certificates src="@raw/myhostinger_cert"/>
         </trust-anchors>

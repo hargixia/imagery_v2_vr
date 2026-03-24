@@ -71,7 +71,7 @@ class materi : AppCompatActivity() {
                 call: Call<List<materi_list>?>,
                 t: Throwable
             ) {
-                Toast.makeText(this@materi,"error : " + t.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@materi, t.toString(), Toast.LENGTH_LONG).show()
             }
 
         })

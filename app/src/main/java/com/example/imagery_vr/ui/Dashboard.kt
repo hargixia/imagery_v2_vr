@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -55,17 +56,19 @@ class Dashboard : AppCompatActivity() {
 
         db_tv1          = findViewById(R.id.db_tv1)
         btn_logout      = findViewById(R.id.db_logout_btn)
-        btn_materi1      = findViewById(R.id.db_btn_materi1)
-        btn_materi2      = findViewById(R.id.db_btn_materi2)
+        btn_materi1     = findViewById(R.id.db_btn_materi1)
+        btn_materi2     = findViewById(R.id.db_btn_materi2)
         btn_about       = findViewById(R.id.db_btn_about)
 
         db_tv1.text = "Nama User : $ds_nama"
 
+        val builder = AlertDialog.Builder(this)
+
         playNextTrack()
 
         if (survey_count > 2){
-            startActivity(Intent(this@Dashboard, Survey::class.java))
-            releaseMediaPlayer()
+            //startActivity(Intent(this@Dashboard, Survey::class.java))
+            //releaseMediaPlayer()
         }
 
         btn_logout.setOnClickListener {
@@ -74,7 +77,7 @@ class Dashboard : AppCompatActivity() {
 
         btn_materi1.setOnClickListener {
             val intent = Intent(this@Dashboard, materi::class.java).apply {
-                putExtra("App","App1")
+                putExtra("App","Mental Toughness Questionnaire")
                 putExtra("AppVal",1)
             }
             startActivity(intent)
@@ -83,7 +86,7 @@ class Dashboard : AppCompatActivity() {
 
         btn_materi2.setOnClickListener {
             val intent = Intent(this@Dashboard, materi::class.java).apply {
-                putExtra("App","App2")
+                putExtra("App","Sport Imagery Ability Questionnaire")
                 putExtra("AppVal",2)
             }
             startActivity(intent)

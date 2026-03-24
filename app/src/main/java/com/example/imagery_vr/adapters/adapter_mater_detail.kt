@@ -13,6 +13,7 @@ import com.example.imagery_vr.models.materi_detail_items
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.ui.Materi_Detail
 import com.example.imagery_vr.ui.Materi_Play_Video
+import com.example.imagery_vr.ui.Materi_Play_audio
 import com.example.imagery_vr.ui.Materi_Play_teks
 
 class adapter_mater_detail(
@@ -50,14 +51,22 @@ class adapter_mater_detail(
                     }
                 holder.itemView.context.startActivity(intent)
             }else if (item.tipe == "teks"){
-            val intent = Intent(holder.itemView.context, Materi_Play_teks::class.java)
+                val intent = Intent(holder.itemView.context, Materi_Play_teks::class.java)
                 .apply {
                     putExtra("md2_judul",item.judul)
                     putExtra("md2_desc",item.deskripsi)
                     putExtra("md2_isi",item.isi)
                 }
-            holder.itemView.context.startActivity(intent)
-        }
+                holder.itemView.context.startActivity(intent)
+            }else if (item.tipe == "audio"){
+                val intent = Intent(holder.itemView.context, Materi_Play_audio::class.java)
+                    .apply {
+                        putExtra("md2_judul",item.judul)
+                        putExtra("md2_desc",item.deskripsi)
+                        putExtra("md2_isi",item.isi)
+                    }
+                holder.itemView.context.startActivity(intent)
+            }
         }
     }
 

@@ -4,10 +4,14 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -16,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.imagery_vr.R
+import com.example.imagery_vr.models.bidang
 import com.example.imagery_vr.support.response
 import com.example.imagery_vr.support.api_services
 import com.example.imagery_vr.support.encryption
@@ -47,6 +52,18 @@ class AuthRegister : AppCompatActivity() {
     private lateinit var tv_error       : TextView
 
     private lateinit var tglL           : String
+    private lateinit var bidang_spinner : Spinner
+
+    val dataList = listOf(
+        bidang(1, "Basket"),
+        bidang(2, "Sepak Bola"),
+        bidang(3, "Voli"),
+        bidang(4, "Renang"),
+        bidang(5, "Bulutangkis"),
+        bidang(6, "Tenis Meja"),
+        bidang(7, "Atletik"),
+        bidang(8, "Fustal"),
+    )
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +90,30 @@ class AuthRegister : AppCompatActivity() {
         tv_error    = findViewById(R.id.ar_error)
 
         tglL        = ""
+
+        bidang_spinner = findViewById(R.id.spinner_regis)
+
+        var bidang_id = 0
+        val names = dataList.map { it.nama }
+        val adapter = ArrayAdapter(this,R.layout.spinner_list,names)
+        adapter.setDropDownViewResource(R.layout.spinner_list)
+        bidang_spinner.adapter = adapter
+
+        bidang_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                bidang_id = dataList[position].id
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                bidang_id = 0
+            }
+
+        }
 
         btn_date.setOnClickListener {
             showDatePicker()
@@ -103,11 +144,12 @@ class AuthRegister : AppCompatActivity() {
                         "Laki-Laki" -> sgender = "L"
                         "Perempuan" -> sgender = "P"
                     }
-                    val req =   tx_username.text.toString() + ">>" +
+                    val req =   "Register>>"+
+                                tx_username.text.toString() + ">>" +
                                 tx_name.text.toString() + ">>" +
                                 tglL + ">>" +
                                 sgender + ">>" +
-                                "1>>"+
+                                bidang_id.toString() + ">>"+
                                 tx_cpass.text.toString()
 
                     apis.register(encryption().encob64(req)).enqueue(object : Callback<response>{

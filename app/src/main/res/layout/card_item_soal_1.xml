@@ -26,13 +26,13 @@
 
                 <TextView
                     android:id="@+id/sci_num"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="100"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="16dp" />
+                    android:textSize="16sp"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sci_text_1"
                 android:text="Test"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:layout_margin="10dp"
                 />
         </LinearLayout>
