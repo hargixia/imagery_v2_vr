@@ -98,6 +98,7 @@ class Materi_Play_Video : AppCompatActivity() {
                 val vp_layout               = videoplayer.layoutParams as LinearLayout.LayoutParams
                 vp_layout.height = ViewGroup.LayoutParams.MATCH_PARENT
                 videoplayer.layoutParams = vp_layout
+                videoplayer.player?.play()
 
                 WindowCompat.setDecorFitsSystemWindows(window,false)
                 WindowInsetsControllerCompat(window,window.decorView).let { controller->
