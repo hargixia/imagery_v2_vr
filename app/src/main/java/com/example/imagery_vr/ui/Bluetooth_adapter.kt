@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.imagery_vr.R
+import com.example.imagery_vr.support.deviceData
+import com.example.imagery_vr.support.deviceSessionManager
 import java.io.IOException
 import java.util.UUID
 
@@ -43,12 +45,20 @@ class Bluetooth_adapter : AppCompatActivity() {
         tvIncomingData = findViewById(R.id.tvIncomingData)
 
         loadPairedDevices()
+        val devi = deviceSessionManager.currentDevice
+        Toast.makeText(this,"val : ${devi?.name}", Toast.LENGTH_SHORT).show()
 
         btnConnect.setOnClickListener {
             val selectedPosition = spinnerDevices.selectedItemPosition
             if (selectedPosition != -1 && deviceList.isNotEmpty()) {
                 val selectedDevice = deviceList[selectedPosition]
-                connectToDevice(selectedDevice)
+                //connectToDevice(selectedDevice)
+                deviceSessionManager.currentDevice = deviceData(
+                    cdevice = selectedDevice,
+                    name = selectedDevice.name
+                )
+                deviceSessionManager.connected = true
+                //connectToDevice(selectedDevice)
             } else {
                 Toast.makeText(this, "Pilih perangkat terlebih dahulu", Toast.LENGTH_SHORT).show()
             }
@@ -91,6 +101,7 @@ class Bluetooth_adapter : AppCompatActivity() {
 
             } catch (e: IOException) {
                 e.printStackTrace()
+                deviceSessionManager.connected = false
                 runOnUiThread {
                     Toast.makeText(this, "Koneksi Gagal", Toast.LENGTH_SHORT).show()
                 }

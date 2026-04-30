@@ -17,6 +17,8 @@
     <color name="sporty_danger_red">#DC3545</color>
     <color name="sporty_light_grey_bg">#F5F5F5</color>
 
+    <color name="pr1">#3ab0ffe6</color>
+
     <!-- Color primary and second -->
     <color name="c1">#37AFE1</color>
     <color name="c2">#4CC9FE</color>

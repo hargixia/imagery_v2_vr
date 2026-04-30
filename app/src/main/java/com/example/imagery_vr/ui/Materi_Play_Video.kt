@@ -1,18 +1,17 @@
 package com.example.imagery_vr.ui
 
-import android.media.session.MediaController
-import android.media.session.MediaSession
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +20,13 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.imagery_vr.R
+import com.example.imagery_vr.support.deviceData
+import com.example.imagery_vr.support.deviceSessionManager
+import java.io.IOException
+import java.util.UUID
 
 class Materi_Play_Video : AppCompatActivity() {
 
@@ -39,6 +40,12 @@ class Materi_Play_Video : AppCompatActivity() {
     private lateinit var mediasesion    : androidx.media3.session.MediaSession
 
     private var countDownTimer: CountDownTimer? = null
+
+    // UUID Standar SPP
+    private val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    private var bluetoothSocket: BluetoothSocket? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +62,7 @@ class Materi_Play_Video : AppCompatActivity() {
         exoplayer = ExoPlayer.Builder(this).build()
         mediasesion = androidx.media3.session.MediaSession.Builder(this,exoplayer).build()
 
-        tv_desc         = findViewById(R.id.m_pv_desc)
+        tv_desc         = findViewById(R.id.m_pv_tv1)
         tv_count_down   = findViewById(R.id.m_pv_countdown)
         tv1             = findViewById(R.id.m_pv_tv1)
         videoplayer     = findViewById(R.id.m_pv_videoplayer)
@@ -68,6 +75,16 @@ class Materi_Play_Video : AppCompatActivity() {
         exoplayer.repeatMode = ExoPlayer.REPEAT_MODE_OFF
         exoplayer.prepare()
 
+        val device = deviceSessionManager
+
+        if(device.connected == true){
+            Toast.makeText(this,"device connected", Toast.LENGTH_SHORT).show()
+            val currentDevice = device.currentDevice
+            connectToDevice(currentDevice?.cdevice)
+        }else{
+            Toast.makeText(this,"device not coneected", Toast.LENGTH_SHORT).show()
+        }
+
         startCountdown(11000,1000)
 
         val callback = object : OnBackPressedCallback(true){
@@ -75,6 +92,7 @@ class Materi_Play_Video : AppCompatActivity() {
                 exoplayer.stop()
                 videoplayer.player?.stop()
                 mediasesion.release()
+                disconnectToDevice()
                 finish()
                 Toast.makeText(this@Materi_Play_Video,"Video Selesai", Toast.LENGTH_SHORT).show()
             }
@@ -107,6 +125,71 @@ class Materi_Play_Video : AppCompatActivity() {
                 }
             }
         }.start()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun connectToDevice(device: BluetoothDevice?) {
+        // Menjalankan koneksi di background thread agar UI tidak macet
+        Thread {
+            try {
+                bluetoothSocket = device?.createRfcommSocketToServiceRecord(uuid)
+                bluetoothAdapter?.cancelDiscovery() // Hentikan pencarian sebelum koneksi
+                bluetoothSocket?.connect()
+
+                runOnUiThread {
+                    Toast.makeText(this, "Terhubung ke ${device?.name}", Toast.LENGTH_SHORT).show()
+                }
+
+                receiveData(bluetoothSocket)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+                runOnUiThread {
+                    Toast.makeText(this, "Koneksi Gagal", Toast.LENGTH_SHORT).show()
+                }
+                try {
+                    bluetoothSocket?.close()
+                } catch (closeException: IOException) { }
+            }
+        }.start()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun disconnectToDevice() {
+        if (bluetoothSocket != null) {
+            try {
+                bluetoothSocket?.close()
+                bluetoothSocket = null // Kosongkan variabel setelah ditutup
+
+                Toast.makeText(this, "Koneksi diputus", Toast.LENGTH_SHORT).show()
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(this, "Gagal memutus koneksi", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Tidak ada koneksi yang aktif", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun receiveData(socket: BluetoothSocket?) {
+        val inputStream = socket?.inputStream
+        val reader = inputStream?.bufferedReader()
+
+        while (socket != null && socket.isConnected) {
+            try {
+                val incomingText = reader?.readLine()
+                if (incomingText != null) {
+                    // Update UI harus dilakukan di Main Thread
+                    runOnUiThread {
+                        Toast.makeText(this,"Data : ${incomingText}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                break // Keluar dari loop jika koneksi terputus
+            }
+        }
     }
 
 }
