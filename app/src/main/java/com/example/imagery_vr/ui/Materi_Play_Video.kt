@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -24,9 +27,19 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.imagery_vr.R
+import com.example.imagery_vr.models.perangkat_perkembangan_req
+import com.example.imagery_vr.models.perangkat_perkembangan_res
+import com.example.imagery_vr.support.api_services
 import com.example.imagery_vr.support.deviceData
 import com.example.imagery_vr.support.deviceSessionManager
+import com.example.imagery_vr.support.encryption
+import com.example.imagery_vr.support.retrofit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 class Materi_Play_Video : AppCompatActivity() {
@@ -42,11 +55,15 @@ class Materi_Play_Video : AppCompatActivity() {
 
     private var countDownTimer: CountDownTimer? = null
 
-    // UUID Standar SPP
-    private val uuid: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-    private var bluetoothSocket: BluetoothSocket? = null
+    val dataParcel                  : Array<String?> = arrayOfNulls(3)
+    private val bluetoothAdapter    : BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    private var bluetoothSocket     : BluetoothSocket? = null
+    private val uuid                : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
+    private lateinit var ds         : SharedPreferences
+    private var user_id             : Int = 0
+
+    val dInfo                       = deviceSessionManager.currentDevice
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +75,13 @@ class Materi_Play_Video : AppCompatActivity() {
             insets
         }
 
+
         val desc        = intent.getStringExtra("md2_desc")
         val video_url   = intent.getStringExtra("md2_video")
+
+        ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
+        user_id         = ds.getInt("user_id",0)
+
         exoplayer = ExoPlayer.Builder(this).build()
         mediasesion = androidx.media3.session.MediaSession.Builder(this,exoplayer).build()
 
@@ -93,7 +115,7 @@ class Materi_Play_Video : AppCompatActivity() {
                 exoplayer.stop()
                 videoplayer.player?.stop()
                 mediasesion.release()
-                disconnectToDevice()
+                disconnectDevice()
                 finish()
                 Toast.makeText(this@Materi_Play_Video,"Video Selesai", Toast.LENGTH_SHORT).show()
             }
@@ -118,6 +140,7 @@ class Materi_Play_Video : AppCompatActivity() {
                 vp_layout.height = ViewGroup.LayoutParams.MATCH_PARENT
                 videoplayer.layoutParams = vp_layout
                 videoplayer.player?.play()
+                connectToDevice(dInfo?.cdevice)
 
                 WindowCompat.setDecorFitsSystemWindows(window,false)
                 WindowInsetsControllerCompat(window,window.decorView).let { controller->
@@ -145,6 +168,7 @@ class Materi_Play_Video : AppCompatActivity() {
 
             } catch (e: IOException) {
                 e.printStackTrace()
+                deviceSessionManager.connected = false
                 runOnUiThread {
                     Toast.makeText(this, "Koneksi Gagal", Toast.LENGTH_SHORT).show()
                 }
@@ -155,8 +179,99 @@ class Materi_Play_Video : AppCompatActivity() {
         }.start()
     }
 
-    @SuppressLint("MissingPermission")
-    private fun disconnectToDevice() {
+    private fun receiveData(socket: BluetoothSocket?) {
+        val inputStream     = socket?.inputStream
+        val reader          = inputStream?.bufferedReader()
+
+        var dataCollection  = ArrayList<String>()
+        var req             = "ppi>>" + "1>>" + user_id.toString()
+        var collection      = ""
+
+        val apis            = retrofit.instance.create(api_services::class.java)
+
+        var pos             = 0
+        val holder          = 10
+        var unsent          = 0
+        var sent            = 0
+
+        val format_jam      = DateTimeFormatter.ofPattern("HH:mm:ss")
+        val format_tgl      = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+
+        while (socket != null && socket.isConnected) {
+            try {
+
+                val incomingText = reader?.readLine()
+
+                if (incomingText != null) {
+                    Log.d("pos", "pos : ${pos.toString()}")
+                    Log.d("unsent", "unsent : ${unsent.toString()}")
+                    Log.d("sent", "sent : ${sent.toString()}")
+
+                    if (dataCollection.size > holder) {
+                        Log.d("process", "Sending....")
+
+                        val data = perangkat_perkembangan_req(
+                            encryption().encob64(req),
+                            encryption().encob64(collection)
+                        )
+
+                        // Kirim data secara sinkron atau asinkron tanpa coroutine berlebih
+                        apis.getPerkembangan_perangkatIN(data).enqueue(object : Callback<perangkat_perkembangan_res> {
+                            override fun onResponse(
+                                p0: Call<perangkat_perkembangan_res?>,
+                                p1: Response<perangkat_perkembangan_res?>
+                            ) {
+                                if (p1.isSuccessful) {
+                                    if(p1.body()?.code == 1){
+                                        Log.d("success", "complete : ${p1.body()?.code}")
+                                        sent += 1
+                                    }else{
+                                        Log.e("unsuccess", "Error un : ${p1.body()?.code}")
+                                        unsent += 1
+                                    }
+                                } else {
+                                    Log.e("unsuccess", "Error un : ${p1.code().toString()}")
+                                    unsent += 1
+                                }
+
+                            }
+
+                            override fun onFailure(
+                                p0: Call<perangkat_perkembangan_res?>,
+                                p1: Throwable
+                            ) {
+                                Log.e("unsuccess", "Error onFailure : ${p1.message.toString()}")
+                                unsent += 1
+                            }
+                        })
+
+                        pos = -1
+                        dataCollection.clear()
+                        collection = ""
+                        Log.d("process", "Data Cleared")
+                    } else {
+                        val waktu_sekarang  = LocalDateTime.now()
+                        var jam_c           = waktu_sekarang.format(format_jam)
+                        var tgl_c           = waktu_sekarang.format(format_tgl)
+                        var finalData       = incomingText + ">>" + jam_c + ">>" + tgl_c
+                        val enco            = encryption().encob64(finalData)
+
+                        dataCollection.add(enco)
+                        collection += enco
+                        if (pos <= (holder - 1)) {
+                            collection += ">>"
+                        }
+                    }
+                    pos += 1
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                break // Keluar dari loop jika koneksi terputus
+            }
+        }
+    }
+
+    private fun disconnectDevice() {
         if (bluetoothSocket != null) {
             try {
                 bluetoothSocket?.close()
@@ -170,26 +285,6 @@ class Materi_Play_Video : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "Tidak ada koneksi yang aktif", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun receiveData(socket: BluetoothSocket?) {
-        val inputStream = socket?.inputStream
-        val reader = inputStream?.bufferedReader()
-
-        while (socket != null && socket.isConnected) {
-            try {
-                val incomingText = reader?.readLine()
-                if (incomingText != null) {
-                    // Update UI harus dilakukan di Main Thread
-                    runOnUiThread {
-                        Toast.makeText(this,"Data : ${incomingText}", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-                break // Keluar dari loop jika koneksi terputus
-            }
         }
     }
 
