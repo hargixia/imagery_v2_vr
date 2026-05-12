@@ -5,11 +5,18 @@ import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
+import com.example.imagery_vr.models.perangkat_perkembangan_req
+import com.example.imagery_vr.models.perangkat_perkembangan_res
 import com.example.imagery_vr.models.perkembangan_res
 import com.example.imagery_vr.models.survey_response
 import com.example.imagery_vr.models.survey_soal
+import okhttp3.RequestBody
+import okhttp3.Response
+import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface api_services {
@@ -42,4 +49,10 @@ interface api_services {
 
     @GET("/api/perkembangan/{data}")
     fun getPerkembangan(@Path("data") data : String) : Call<List<perkembangan_res>>
+
+    @GET("/api/perkembangan/perangkat/input/{data}")
+    fun getPerkembangan_perangkatIO(@Path("data") data : String) : Call<List<perkembangan_res>>
+
+    @POST("/api/perkembangan/perangkat/in")
+    fun getPerkembangan_perangkatIN(@Body req : perangkat_perkembangan_req) : Call<perangkat_perkembangan_res>
 }

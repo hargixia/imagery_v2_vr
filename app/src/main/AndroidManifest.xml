@@ -45,9 +45,6 @@
             android:name=".ui.Profile"
             android:exported="false" />
         <activity
-            android:name=".ui.Profil"
-            android:exported="false" />
-        <activity
             android:name=".ui.About"
             android:exported="false" />
         <activity
@@ -89,7 +86,7 @@
             android:windowSoftInputMode="adjustResize|stateVisible" />
         <activity
             android:name=".ui.AuthLogin"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"

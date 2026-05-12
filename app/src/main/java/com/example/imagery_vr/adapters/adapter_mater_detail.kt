@@ -58,7 +58,17 @@ class adapter_mater_detail(
                 putExtra("md2_video",item.isi)
             }
         val intentKeBluetooth   = Intent(holder.itemView.context, Bluetooth_adapter::class.java)
+            .apply {
+                putExtra("md2_judul",item.judul)
+                putExtra("md2_desc",item.deskripsi)
+                putExtra("md2_isi",item.isi)
+            }
         val intentKeProfil      = Intent(holder.itemView.context, Profile::class.java)
+            .apply {
+                putExtra("md2_judul",item.judul)
+                putExtra("md2_desc",item.deskripsi)
+                putExtra("md2_isi",item.isi)
+            }
         //Toast.makeText(holder.itemView.context,"Perangkat ${dInfo?.name}", Toast.LENGTH_SHORT).show()
 
         holder.card.setOnClickListener {

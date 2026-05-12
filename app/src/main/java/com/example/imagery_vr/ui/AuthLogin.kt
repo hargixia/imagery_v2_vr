@@ -1,5 +1,7 @@
 package com.example.imagery_vr.ui
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -33,7 +35,6 @@ class AuthLogin : AppCompatActivity() {
 
     private lateinit var tx_username    : EditText
     private lateinit var tx_passwrod    : EditText
-    private lateinit var tv_error       : TextView
 
     private lateinit var btn_login      : Button
     private lateinit var btn_register   : Button
@@ -52,23 +53,24 @@ class AuthLogin : AppCompatActivity() {
         }
 
         val apis        = retrofit.instance.create(api_services::class.java)
+        val alertDialog = AlertDialog.Builder(this@AuthLogin)
         ds              = getSharedPreferences("IMGV1", Context.MODE_PRIVATE)
 
         tx_username     = findViewById(R.id.al_username)
         tx_passwrod     = findViewById(R.id.al_password)
-        tv_error        = findViewById(R.id.al_error_tx)
 
         btn_login       = findViewById(R.id.al_login_btn)
         btn_register    = findViewById(R.id.al_register_btn)
+
+        alertDialog.setTitle("Terjadi Kesalahan!")
 
         btn_login.setOnClickListener {
             if (
                 tx_username.text.toString() == "" ||
                 tx_passwrod.text.toString() == ""
             ){
-                tv_error.setText("Harap Isi Username dan Password nya...")
+                alertDialog.setMessage("Nama Pengguna atau Kata Sandi Masih Kosong.")
             }else{
-                tv_error.setText(" ")
                 val req     = "Login>>"+tx_username.text.toString() + ">>" + tx_passwrod.text.toString()
                 val enco    = encryption().encob64(req)
                 apis.login(enco).enqueue(object : Callback<List<response>>{
@@ -87,11 +89,15 @@ class AuthLogin : AppCompatActivity() {
                                     startActivity(Intent(this@AuthLogin, Dashboard::class.java))
                                     finish()
                                 }else {
-                                    tv_error.text = "Username atau Password Salah."
+                                    alertDialog.setMessage("Nama Pengguna atau Kata Sandi Salah.")
+                                    var dialog : AlertDialog = alertDialog.create()
+                                    dialog.show()
                                 }
                             }
                         }else{
-                            tv_error.text = "Server Tidak Merespon. \n Silahkan Coba Lagi ${response.toString()}"
+                            alertDialog.setMessage("Server Tidak Merespon. \n Silahkan Coba Lagi ${response.toString()}")
+                            var dialog : AlertDialog = alertDialog.create()
+                            dialog.show()
                         }
                     }
 
@@ -99,7 +105,9 @@ class AuthLogin : AppCompatActivity() {
                         call: Call<List<response>?>,
                         t: Throwable
                     ) {
-                        tv_error.text = "Error => ${t.toString()}"
+                        alertDialog.setMessage("Server Error : ${t.toString()}")
+                        var dialog : AlertDialog = alertDialog.create()
+                        dialog.show()
                     }
 
                 })
@@ -111,20 +119,19 @@ class AuthLogin : AppCompatActivity() {
         }
     }
 
-    fun savedata(data : users){
-        val ndate       = LocalDate.now()
-        val exp_date    = ndate.plusDays(1)
-        var dse         = ds.edit()
+    fun savedata(data : users) {
+        val ndate = LocalDate.now()
+        val exp_date = ndate.plusDays(1)
+        var dse = ds.edit()
 
-        dse.putString("login_exp",exp_date.toString())
-        dse.putInt("login_status",1)
-        dse.putInt("user_id",data.id)
-        dse.putString("username",data.username)
-        dse.putString("user_jk",data.jenis_kelamin)
-        dse.putString("nama",data.nama)
-        dse.putInt("bidang_id",data.id_bidang)
-        dse.putInt("survey_count",data.survey_count)
+        dse.putString("login_exp", exp_date.toString())
+        dse.putInt("login_status", 1)
+        dse.putInt("user_id", data.id)
+        dse.putString("username", data.username)
+        dse.putString("user_jk", data.jenis_kelamin)
+        dse.putString("nama", data.nama)
+        dse.putInt("bidang_id", data.id_bidang)
+        dse.putInt("survey_count", data.survey_count)
         dse.apply()
     }
-
 }

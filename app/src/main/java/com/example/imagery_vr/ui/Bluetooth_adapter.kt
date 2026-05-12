@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -59,6 +60,7 @@ class Bluetooth_adapter : AppCompatActivity() {
                 )
                 deviceSessionManager.connected = true
                 //connectToDevice(selectedDevice)
+                startActivity(Intent(this@Bluetooth_adapter, materi::class.java))
             } else {
                 Toast.makeText(this, "Pilih perangkat terlebih dahulu", Toast.LENGTH_SHORT).show()
             }
