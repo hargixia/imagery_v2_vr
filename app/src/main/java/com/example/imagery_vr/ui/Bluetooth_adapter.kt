@@ -6,7 +6,10 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothSocket
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -64,7 +67,8 @@ class Bluetooth_adapter : AppCompatActivity() {
         btnConnect = findViewById(R.id.btnConnect)
         tvIncomingData = findViewById(R.id.tvIncomingData)
 
-        loadPairedDevices()
+        scanActiveDevices()
+        //loadPairedDevices()
         //val devi = deviceSessionManager.currentDevice
         //Toast.makeText(this,"val : ${devi?.name}", Toast.LENGTH_SHORT).show()
 
@@ -126,25 +130,87 @@ class Bluetooth_adapter : AppCompatActivity() {
         if (permissionsToRequest.isNotEmpty()) {
             Toast.makeText(this@Bluetooth_adapter,"Tidak ada izin bluetooth.", Toast.LENGTH_LONG).show()
         } else {
-            loadPairedDevices()
+            scanActiveDevices()
+        }
+    }
+
+    private val receiver = object : BroadcastReceiver() {
+        @SuppressLint("MissingPermission")
+        override fun onReceive(context: Context, intent: Intent) {
+            val action: String? = intent.action
+
+            // Jika sebuah perangkat Bluetooth ditemukan
+            if (BluetoothDevice.ACTION_FOUND == action) {
+                // Ambil objek perangkat dari intent
+                val device: BluetoothDevice? = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
+
+                if (device != null) {
+                    // Ambil nama perangkat. Jika null, beri nilai string kosong agar tidak error
+                    val deviceName = device.name ?: ""
+                    val deviceAddress = device.address
+
+                    // --- LOGIKA FILTERING ---
+                    // Mengecek apakah nama perangkat diawali dengan "IMAGERY"
+                    // parameter ignoreCase = true membuat pencarian kebal terhadap huruf besar/kecil (Imagery, imagery, IMAGERY akan tetap terbaca)
+                    if (deviceName.startsWith("IMAGERY", ignoreCase = true)) {
+
+                        // Cegah duplikasi di dalam list
+                        if (!deviceList.contains(device)) {
+                            deviceList.add(device)
+                            deviceNames.add("$deviceName ($deviceAddress)")
+
+                            // Beritahu Spinner bahwa ada data baru yang valid
+                            (spinnerDevices.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                        }
+                    }
+                }
+            }
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun loadPairedDevices() {
-        val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-        if (pairedDevices?.isNotEmpty() == true) {
-            for (device in pairedDevices) {
-                deviceList.add(device)
-                deviceNames.add("${device.name} (${device.address})")
-            }
+    private fun scanActiveDevices() {
+        // 1. Bersihkan daftar UI yang lama
+        deviceList.clear()
+        deviceNames.clear()
 
-            // Memasukkan daftar nama ke dalam Spinner
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, deviceNames)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerDevices.adapter = adapter
+        // Set adapter ke Spinner agar tidak kosong saat mulai mencari
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, deviceNames)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerDevices.adapter = adapter
+
+        // 2. Daftarkan BroadcastReceiver untuk menangkap perangkat yang ditemukan
+        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        registerReceiver(receiver, filter)
+
+        // 3. Mulai proses pemindaian
+        if (bluetoothAdapter?.isDiscovering == true) {
+            bluetoothAdapter.cancelDiscovery() // Hentikan pencarian lama jika masih berjalan
+        }
+
+        val started = bluetoothAdapter?.startDiscovery()
+        if (started == true) {
+            Toast.makeText(this, "Mencari perangkat aktif...", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Tidak ada perangkat Bluetooth terpasang", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Gagal memulai pencarian", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Hentikan proses pemindaian agar hemat baterai
+        @SuppressLint("MissingPermission")
+        if (bluetoothAdapter?.isDiscovering == true) {
+            bluetoothAdapter.cancelDiscovery()
+        }
+
+        // Cabut pendaftaran BroadcastReceiver
+        try {
+            unregisterReceiver(receiver)
+        } catch (e: IllegalArgumentException) {
+            // Blok catch ini berguna jika receiver belum sempat terdaftar tetapi aplikasi sudah ditutup
+            e.printStackTrace()
         }
     }
 

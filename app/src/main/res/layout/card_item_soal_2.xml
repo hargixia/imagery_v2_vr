@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/u_navy"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sci2_num"
+                    android:textColor="@color/white"
+                    android:text="100"
+                    android:textSize="16sp"
+                    android:layout_margin="10dp"
+                    android:textAlignment="center"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sci2_text_1"
+                android:text="Test"
+                android:textSize="16sp"
+                android:layout_margin="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="5dp">
+
+            <RadioGroup
+                android:id="@+id/sci2_rg_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="0dp">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci2_rg_op1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sangat Tidak Setuju"
+                    android:layout_marginEnd="2dp"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci2_rg_op2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tidak Setuju"
+                    android:layout_marginEnd="24dp"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci2_rg_op3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:text="Netral"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci2_rg_op4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:text="Setuju"
+                    app:buttonTint="@color/u_navy"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sci2_rg_op5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:text="Sangat Setuju"
+                    app:buttonTint="@color/u_navy"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

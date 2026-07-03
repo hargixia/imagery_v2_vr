@@ -241,7 +241,7 @@ class Materi_Play_Video : AppCompatActivity() {
     private val gattCallback = object : BluetoothGattCallback() {
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
+            if (newState == BluetoothProfile.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS) {
                 runOnUiThread { Toast.makeText(this@Materi_Play_Video, "BLE Terhubung!", Toast.LENGTH_SHORT).show() }
                 Log.d("BLE_GATT", "Terhubung. Mencari Services...")
                 gatt.discoverServices()
@@ -250,6 +250,13 @@ class Materi_Play_Video : AppCompatActivity() {
                 Log.d("BLE_GATT", "Terputus dari perangkat.")
                 bluetoothGatt?.close()
                 bluetoothGatt = null
+                finish()
+            }else{
+                runOnUiThread { Toast.makeText(this@Materi_Play_Video, "BLE Terputus", Toast.LENGTH_SHORT).show() }
+                Log.d("BLE_GATT", "Terputus dari perangkat.")
+                bluetoothGatt?.close()
+                bluetoothGatt = null
+                finish()
             }
         }
 
