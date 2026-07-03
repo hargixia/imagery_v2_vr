@@ -242,22 +242,22 @@ class Materi_Play_Video : AppCompatActivity() {
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             if (newState == BluetoothProfile.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS) {
-                runOnUiThread { Toast.makeText(this@Materi_Play_Video, "BLE Terhubung!", Toast.LENGTH_SHORT).show() }
+                runOnUiThread { Toast.makeText(this@Materi_Play_Video, "Perangkat Terhubung!", Toast.LENGTH_SHORT).show() }
                 Log.d("BLE_GATT", "Terhubung. Mencari Services...")
                 gatt.discoverServices()
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                runOnUiThread { Toast.makeText(this@Materi_Play_Video, "BLE Terputus", Toast.LENGTH_SHORT).show() }
-                Log.d("BLE_GATT", "Terputus dari perangkat.")
-                bluetoothGatt?.close()
-                bluetoothGatt = null
-                finish()
+                gagalTerhubung()
             }else{
-                runOnUiThread { Toast.makeText(this@Materi_Play_Video, "BLE Terputus", Toast.LENGTH_SHORT).show() }
-                Log.d("BLE_GATT", "Terputus dari perangkat.")
-                bluetoothGatt?.close()
-                bluetoothGatt = null
-                finish()
+                gagalTerhubung()
             }
+        }
+
+        fun gagalTerhubung(){
+            runOnUiThread { Toast.makeText(this@Materi_Play_Video, "Perangkat Terputus", Toast.LENGTH_SHORT).show() }
+            Log.d("BLE_GATT", "Terputus dari perangkat.")
+            bluetoothGatt?.close()
+            bluetoothGatt = null
+            finish()
         }
 
         @SuppressLint("MissingPermission")
