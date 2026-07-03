@@ -14,6 +14,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
@@ -33,27 +34,26 @@ import kotlin.math.log
 
 class Bluetooth_adapter : AppCompatActivity() {
 
-    private lateinit var spinnerDevices: Spinner
-    private lateinit var btnConnect: Button
-    private lateinit var tvIncomingData: TextView
+    private lateinit var spinnerDevices : Spinner
+    private lateinit var btnConnect     : Button
+    private lateinit var btnScan        : Button
+    private lateinit var tv_message     : TextView
 
-    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
-    private val deviceList = ArrayList<BluetoothDevice>()
+    private val bluetoothAdapter        : BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    private val deviceList  = ArrayList<BluetoothDevice>()
     private val deviceNames = ArrayList<String>()
 
-    var md2_id  : Int = 0
-    var md2_judul : String? = ""
-    var md2_desc : String? = ""
-    var md2_isi : String? = ""
-    var md2_device : Boolean = false
+    var md2_id      : Int = 0
+    var md2_judul   : String? = ""
+    var md2_desc    : String? = ""
+    var md2_isi     : String? = ""
+    var md2_device  : Boolean = false
 
-    var md2_tipe : Int = 0
+    var md2_tipe    : Int = 0
 
-    // UUID Standar SPP
-    // UUID yang sama dengan ESP32
-    val SERVICE_UUID: UUID = UUID.fromString("dc38bbe4-d0f5-4d29-8cb3-004a9efeef64")
-    val CHAR_UUID: UUID = UUID.fromString("23677c9f-9394-4de3-87b2-7b0c158a4c02")
-    private var bluetoothSocket: BluetoothSocket? = null
+    val SERVICE_UUID            : UUID = UUID.fromString("dc38bbe4-d0f5-4d29-8cb3-004a9efeef64")
+    val CHAR_UUID               : UUID = UUID.fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8")
+    private var bluetoothSocket : BluetoothSocket? = null
 
     var bluetoothGatt: BluetoothGatt? = null
 
@@ -63,21 +63,26 @@ class Bluetooth_adapter : AppCompatActivity() {
         setContentView(R.layout.activity_bluetooth_adapter)
 
         // Inisialisasi UI
-        spinnerDevices = findViewById(R.id.spinnerDevices)
-        btnConnect = findViewById(R.id.btnConnect)
-        tvIncomingData = findViewById(R.id.tvIncomingData)
-
+        spinnerDevices  = findViewById(R.id.ba_spinnerDevices)
+        btnConnect      = findViewById(R.id.ba_btn_connect)
+        btnScan         = findViewById(R.id.ba_btn_scan)
+        tv_message      = findViewById(R.id.ba_tv_message)
         scanActiveDevices()
-        //loadPairedDevices()
-        //val devi = deviceSessionManager.currentDevice
-        //Toast.makeText(this,"val : ${devi?.name}", Toast.LENGTH_SHORT).show()
 
-        md2_id = intent.getIntExtra("md2_id",0)
-        md2_judul = intent.getStringExtra("md2_judul")
-        md2_desc = intent.getStringExtra("md2_desc")
-        md2_isi = intent.getStringExtra("md2_isi")
-        md2_device = true
-        md2_tipe = intent.getIntExtra("md2_tipe",0)
+        md2_id      = intent.getIntExtra("md2_id",0)
+        md2_judul   = intent.getStringExtra("md2_judul")
+        md2_desc    = intent.getStringExtra("md2_desc")
+        md2_isi     = intent.getStringExtra("md2_isi")
+        md2_device  = true
+        md2_tipe    = intent.getIntExtra("md2_tipe",0)
+
+        val adapter = ArrayAdapter(this,R.layout.spinner_list,deviceNames)
+        adapter.setDropDownViewResource(R.layout.spinner_list)
+        spinnerDevices.adapter = adapter
+
+        btnScan.setOnClickListener {
+            scanActiveDevices()
+        }
 
         btnConnect.setOnClickListener {
             val selectedPosition = spinnerDevices.selectedItemPosition
@@ -157,10 +162,14 @@ class Bluetooth_adapter : AppCompatActivity() {
                         // Cegah duplikasi di dalam list
                         if (!deviceList.contains(device)) {
                             deviceList.add(device)
-                            deviceNames.add("$deviceName ($deviceAddress)")
+                            deviceNames.add("$deviceName")
+                            //deviceNames.add("$deviceName ($deviceAddress)")
 
                             // Beritahu Spinner bahwa ada data baru yang valid
                             (spinnerDevices.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                        }else{
+                            tv_message.setText("Tidak Ada Perangkat Yang Aktif.")
+                            tv_message.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -190,9 +199,11 @@ class Bluetooth_adapter : AppCompatActivity() {
 
         val started = bluetoothAdapter?.startDiscovery()
         if (started == true) {
+            tv_message.visibility = View.INVISIBLE
             Toast.makeText(this, "Mencari perangkat aktif...", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Gagal memulai pencarian", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Gagal memulai pencarian, Cek Bluetooh Anda", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 

@@ -1,46 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:theme="@style/Theme.Material3.Light"
+    android:background="@color/sporty_light_grey_bg">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/ba_tv_1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pilih Perangkat ESP32:"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:text="Silahkan Pilih Perangkat IMAGERY"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/u_navy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.245" />
 
     <Spinner
-        android:id="@+id/spinnerDevices"
+        android:id="@+id/ba_spinnerDevices"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginBottom="16dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnConnect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hubungkan" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data Masuk:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="72dp"
+        style="@android:style/Widget.DeviceDefault.Light.Spinner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ba_tv_1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvIncomingData"
+        android:id="@+id/ba_tv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="-"
-        android:textSize="48sp"
-        android:gravity="center"
-        android:textColor="#000000"/>
+        android:layout_marginTop="24dp"
+        android:text="Gagal"
+        android:textAlignment="center"
+        android:textColor="@color/danger1"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ba_spinnerDevices"
+        app:layout_constraintVertical_bias="0.0" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ba_spinnerDevices"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ba_btn_connect"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Hubungkan"
+            android:textColor="@color/sporty_light_grey_bg"
+            app:backgroundTint="@color/u_navy"
+            app:cornerRadius="10dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ba_btn_scan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="Ulangi Pencarian"
+            android:textColor="@color/sporty_light_grey_bg"
+            app:backgroundTint="@color/u_navy"
+            app:cornerRadius="10dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

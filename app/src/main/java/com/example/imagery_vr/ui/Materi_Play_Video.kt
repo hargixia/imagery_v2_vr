@@ -129,8 +129,9 @@ class Materi_Play_Video : AppCompatActivity() {
 
         if (device_con == true){
             if(device.connected == true){
-                //Toast.makeText(this,"device connected", Toast.LENGTH_SHORT).show()
+
                 val currentDevice = device.currentDevice
+                Toast.makeText(this,"device : ${currentDevice?.cdevice}", Toast.LENGTH_SHORT).show()
                 connectToBLEDevice(currentDevice?.cdevice)
                 //connectToDevice(currentDevice?.cdevice)
 
@@ -290,9 +291,7 @@ class Materi_Play_Video : AppCompatActivity() {
         ) {
             // Membaca data dalam format String
             val data = characteristic.getStringValue(0)
-
-
-            var req             = "ppi>>" + idAccess.toString() + ">>" + user_id.toString()
+            var req  = "ppi>>" + idAccess.toString() + ">>" + user_id.toString()
 
             Log.d("BLE_DATA", "Data masuk: $data")
 

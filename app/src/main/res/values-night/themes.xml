@@ -3,6 +3,8 @@
     <style name="Theme.IMAGERY_VR" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:fontFamily">@font/arial</item>
+        <item name="background">@color/sporty_light_grey_bg</item>
     </style>
 
     <style name="Theme.AppCompat.DayNight.NoActionBar.Fullscreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
