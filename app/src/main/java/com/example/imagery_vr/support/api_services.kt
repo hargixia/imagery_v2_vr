@@ -5,8 +5,14 @@ import com.example.imagery_vr.models.kuisoner_pertanyaan
 import com.example.imagery_vr.models.kuisoner_response
 import com.example.imagery_vr.models.materi_detail_list
 import com.example.imagery_vr.models.materi_list
-import com.example.imagery_vr.models.perangkat_perkembangan_req
-import com.example.imagery_vr.models.perangkat_perkembangan_res
+import com.example.imagery_vr.models.perangkat_akses_catat_req
+import com.example.imagery_vr.models.perangkat_akses_catat_res
+import com.example.imagery_vr.models.perangkat_akses_req
+import com.example.imagery_vr.models.perangkat_akses_res
+import com.example.imagery_vr.models.perangkat_data_req
+import com.example.imagery_vr.models.perangkat_data_res
+import com.example.imagery_vr.models.perangkat_in_req
+import com.example.imagery_vr.models.perangkat_in_res
 import com.example.imagery_vr.models.perkembangan_res
 import com.example.imagery_vr.models.survey_response
 import com.example.imagery_vr.models.survey_soal
@@ -50,9 +56,16 @@ interface api_services {
     @GET("/api/perkembangan/{data}")
     fun getPerkembangan(@Path("data") data : String) : Call<List<perkembangan_res>>
 
-    @GET("/api/perkembangan/perangkat/input/{data}")
-    fun getPerkembangan_perangkatIO(@Path("data") data : String) : Call<List<perkembangan_res>>
+
+    @POST("/api/perkembangan/perangkat/access")
+    fun catatAkses(@Body req : perangkat_akses_catat_req) : Call<perangkat_akses_catat_res>
+
+    @POST("/api/perkembangan/perangkat/access/data")
+    fun dataAksesMateri(@Body req : perangkat_akses_req) : Call<perangkat_akses_res>
+
+    @POST("/api/perkembangan/perangkat/data")
+    fun dataPerangkat(@Body req : perangkat_data_req) : Call<perangkat_data_res>
 
     @POST("/api/perkembangan/perangkat/in")
-    fun getPerkembangan_perangkatIN(@Body req : perangkat_perkembangan_req) : Call<perangkat_perkembangan_res>
+    fun postPerkembangan_perangkatIN(@Body req : perangkat_in_req) : Call<perangkat_in_res>
 }

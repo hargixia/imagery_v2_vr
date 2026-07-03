@@ -6,6 +6,31 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="dashboard_about">
+        Aplikasi IMAGERY membantu anda mengembangkan ketangguhan mental dan kemampuan olahraga
+        dengan visualisasi terpadu.
+    </string>
+
+    <string name="dasboard_about_btn">
+        Apa itu IMAGERY? Klik untuk lebih lanjut
+    </string>
+
+    <string name="dashboard_materi_1_title">
+        Pelatihan Mental Toughness
+    </string>
+
+    <string name="dashboard_materi_1_desc">
+        Membangun ketahanan, fokus, dan rasa percaya diri melalui visualisasi mental.
+    </string>
+
+    <string name="dashboard_materi_2_title">
+        Pelatihan Sport Ability
+    </string>
+
+    <string name="dashboard_materi_2_desc">
+        Meningkatkan keterampilan teknis dan performa fisik anda dengan visualisasi olahraga.
+    </string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

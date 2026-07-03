@@ -45,6 +45,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("androidx.webkit:webkit:1.12.1")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation(libs.androidx.activity.ktx)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.recyclerview:recyclerview:1.3.1")
     implementation("androidx.cardview:cardview:1.0.0")

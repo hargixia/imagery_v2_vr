@@ -39,6 +39,7 @@
         android:layout_height="500px"
         app:use_controller="true"
         app:resize_mode="zoom"
+        android:keepScreenOn="true"
         />
 
 

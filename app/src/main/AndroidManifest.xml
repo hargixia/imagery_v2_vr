@@ -5,12 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,12 @@
         android:roundIcon="@mipmap/ic_logo_2_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IMAGERY_VR">
+        <activity
+            android:name=".ui.perangkat_data_2"
+            android:exported="false" />
+        <activity
+            android:name=".ui.perangkat_data"
+            android:exported="false" />
         <activity
             android:name=".ui.Bluetooth_adapter"
             android:exported="false" />

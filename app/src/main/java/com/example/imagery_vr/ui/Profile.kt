@@ -16,8 +16,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.imagery_vr.R
-import com.example.imagery_vr.models.perangkat_perkembangan_req
-import com.example.imagery_vr.models.perangkat_perkembangan_res
 import com.example.imagery_vr.models.perkembangan_res
 import com.example.imagery_vr.support.api_services
 import com.example.imagery_vr.support.deviceSessionManager
@@ -70,127 +68,7 @@ class Profile : AppCompatActivity() {
         tv4 = findViewById<TextView>(R.id.profil_tv4)
 
         tv1.text = "Nama Perangkat :${dInfo?.name}"
-        connectToDevice(dInfo?.cdevice)
+
     }
 
-    @SuppressLint("MissingPermission")
-    private fun connectToDevice(device: BluetoothDevice?) {
-        // Menjalankan koneksi di background thread agar UI tidak macet
-        Thread {
-            try {
-                bluetoothSocket = device?.createRfcommSocketToServiceRecord(uuid)
-                bluetoothAdapter?.cancelDiscovery() // Hentikan pencarian sebelum koneksi
-                bluetoothSocket?.connect()
-
-                runOnUiThread {
-                    Toast.makeText(this, "Terhubung ke ${device?.name}", Toast.LENGTH_SHORT).show()
-                }
-
-                receiveData(bluetoothSocket)
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-                deviceSessionManager.connected = false
-                runOnUiThread {
-                    Toast.makeText(this, "Koneksi Gagal", Toast.LENGTH_SHORT).show()
-                }
-                try {
-                    bluetoothSocket?.close()
-                } catch (closeException: IOException) { }
-            }
-        }.start()
-    }
-
-    private fun receiveData(socket: BluetoothSocket?) {
-        val inputStream     = socket?.inputStream
-        val reader          = inputStream?.bufferedReader()
-
-        var dataCollection  = ArrayList<String>()
-        var req             = "ppi>>" + "1>>" + user_id.toString()
-        var collection      = ""
-
-        val apis            = retrofit.instance.create(api_services::class.java)
-
-        var pos             = 0
-        val holder          = 10
-        var unsent          = 0
-        var sent            = 0
-
-        val format_jam      = DateTimeFormatter.ofPattern("HH:mm:ss")
-        val format_tgl      = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-
-        while (socket != null && socket.isConnected) {
-            try {
-
-                val incomingText = reader?.readLine()
-
-                if (incomingText != null) {
-                    Log.d("pos", "pos : ${pos.toString()}")
-                    Log.d("unsent", "unsent : ${unsent.toString()}")
-                    Log.d("sent", "sent : ${sent.toString()}")
-
-                    if (dataCollection.size > holder) {
-                        Log.d("process", "Sending....")
-
-                        val data = perangkat_perkembangan_req(
-                            encryption().encob64(req),
-                            encryption().encob64(collection)
-                        )
-
-                        // Kirim data secara sinkron atau asinkron tanpa coroutine berlebih
-                        apis.getPerkembangan_perangkatIN(data).enqueue(object : Callback<perangkat_perkembangan_res> {
-                            override fun onResponse(
-                                p0: Call<perangkat_perkembangan_res?>,
-                                p1: Response<perangkat_perkembangan_res?>
-                            ) {
-                                if (p1.isSuccessful) {
-                                    if(p1.body()?.code == 1){
-                                        Log.d("success", "complete : ${p1.body()?.code}")
-                                        sent += 1
-                                    }else{
-                                        Log.e("unsuccess", "Error un : ${p1.body()?.code}")
-                                        unsent += 1
-                                    }
-                                } else {
-                                    Log.e("unsuccess", "Error un : ${p1.code().toString()}")
-                                    unsent += 1
-                                }
-
-                            }
-
-                            override fun onFailure(
-                                p0: Call<perangkat_perkembangan_res?>,
-                                p1: Throwable
-                            ) {
-                                Log.e("unsuccess", "Error onFailure : ${p1.message.toString()}")
-                                unsent += 1
-                            }
-                        })
-
-                        pos = -1
-                        dataCollection.clear()
-                        collection = ""
-                        Log.d("process", "Data Cleared")
-                    } else {
-                        val waktu_sekarang  = LocalDateTime.now()
-                        var jam_c           = waktu_sekarang.format(format_jam)
-                        var tgl_c           = waktu_sekarang.format(format_tgl)
-                        var finalData       = incomingText + ">>" + jam_c + ">>" + tgl_c
-                        val enco            = encryption().encob64(finalData)
-                        tv2.text = incomingText
-                        tv3.text = finalData
-                        dataCollection.add(enco)
-                        collection += enco
-                        if (pos <= (holder - 1)) {
-                            collection += ">>"
-                        }
-                    }
-                    pos += 1
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-                break // Keluar dari loop jika koneksi terputus
-            }
-        }
-    }
 }
