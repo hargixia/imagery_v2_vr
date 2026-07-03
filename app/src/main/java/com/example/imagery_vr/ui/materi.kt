@@ -2,6 +2,7 @@ package com.example.imagery_vr.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import android.widget.Toast
@@ -9,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.marginTop
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.imagery_vr.R
@@ -23,10 +26,11 @@ import retrofit2.Response
 
 class materi : AppCompatActivity() {
 
-    private lateinit var tv1     : TextView
-    private lateinit var rv      : RecyclerView
-    private lateinit var adapter : adapter_materi
-    private lateinit var ds      : SharedPreferences
+    private lateinit var tv1        : TextView
+    private lateinit var tv_danger  : TextView
+    private lateinit var rv         : RecyclerView
+    private lateinit var adapter    : adapter_materi
+    private lateinit var ds         : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +48,9 @@ class materi : AppCompatActivity() {
         val appVal      = intent.getIntExtra("AppVal",0)
 
         tv1 = findViewById(R.id.materi_tv_1)
-        tv1.text = "Daftar Materi Imagery \n ${app}"
+        tv1.text = "${app}"
+
+        tv_danger = findViewById(R.id.materi_tv_danger)
 
         rv = findViewById(R.id.materi_rv_1)
         rv.layoutManager = LinearLayoutManager(this)
@@ -71,7 +77,8 @@ class materi : AppCompatActivity() {
                 call: Call<List<materi_list>?>,
                 t: Throwable
             ) {
-                Toast.makeText(this@materi, t.toString(), Toast.LENGTH_LONG).show()
+                tv_danger.visibility = View.VISIBLE
+                rv.visibility = View.INVISIBLE
             }
 
         })

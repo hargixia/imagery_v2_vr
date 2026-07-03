@@ -34,6 +34,7 @@ class adapter_mater_detail(
         val tv_judul    : TextView  = itemView.findViewById(R.id.cmd_tv_judul)
         val tv_desc     : TextView  = itemView.findViewById(R.id.cmd_tv_desc)
         val btn_cek     : Button    = itemView.findViewById(R.id.cmd_btn_cek)
+        val btn_mulai   : Button    = itemView.findViewById(R.id.cmd_btn_mulai)
     }
 
     override fun onCreateViewHolder(
@@ -69,7 +70,7 @@ class adapter_mater_detail(
 
         //Toast.makeText(holder.itemView.context,"Perangkat ${dInfo?.name}", Toast.LENGTH_SHORT).show()
 
-        holder.card.setOnClickListener {
+        holder.btn_mulai.setOnClickListener {
             if (item.tipe == "video"){
                 if(dInfo?.name == null){
                     dialog_konfirmasi.setMessage("Apakah Anda Ingin Menghubungkna ke Perangkat Tambahan?")
