@@ -237,16 +237,23 @@ class Materi_Play_audio : AppCompatActivity() {
     private val gattCallback = object : BluetoothGattCallback() {
         @SuppressLint("MissingPermission")
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
-            if (newState == BluetoothProfile.STATE_CONNECTED) {
-                runOnUiThread { Toast.makeText(this@Materi_Play_audio, "BLE Terhubung!", Toast.LENGTH_SHORT).show() }
+            if (newState == BluetoothProfile.STATE_CONNECTED && status == BluetoothGatt.GATT_SUCCESS) {
+                runOnUiThread { Toast.makeText(this@Materi_Play_audio, "Perangkat Terhubung!", Toast.LENGTH_SHORT).show() }
                 Log.d("BLE_GATT", "Terhubung. Mencari Services...")
                 gatt.discoverServices()
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                runOnUiThread { Toast.makeText(this@Materi_Play_audio, "BLE Terputus", Toast.LENGTH_SHORT).show() }
-                Log.d("BLE_GATT", "Terputus dari perangkat.")
-                bluetoothGatt?.close()
-                bluetoothGatt = null
+                gagalTerhubung()
+            }else{
+                gagalTerhubung()
             }
+        }
+
+        fun gagalTerhubung(){
+            runOnUiThread { Toast.makeText(this@Materi_Play_audio, "Perangkat Terputus", Toast.LENGTH_SHORT).show() }
+            Log.d("BLE_GATT", "Terputus dari perangkat.")
+            bluetoothGatt?.close()
+            bluetoothGatt = null
+            finish()
         }
 
         @SuppressLint("MissingPermission")
