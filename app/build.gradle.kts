@@ -79,4 +79,7 @@ dependencies {
     // Optional: Extractor (for progressive formats like MP4, MP3)
     implementation("androidx.media3:media3-exoplayer-rtsp:$exoplayerVersion")
     implementation("androidx.media3:media3-session:1.3.1")
+
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:12.0.0")
 }

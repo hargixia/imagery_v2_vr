@@ -11,6 +11,11 @@ import com.example.imagery_vr.R
 import com.example.imagery_vr.models.perangkat_akses_list
 import com.example.imagery_vr.models.perangkat_data_list
 import com.example.imagery_vr.ui.perangkat_data_2
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class adapter_perangkat_data (
     private val dataList: List<perangkat_akses_list>
@@ -35,7 +40,12 @@ class adapter_perangkat_data (
         p1: Int
     ) {
         val item = dataList[p1]
-        p0.tv_pos.text = item.pos.toString()
+        val waktu_konversi  = Instant.parse(item.created_at).atZone(ZoneId.systemDefault())
+        val waktu_format    = DateTimeFormatter.ofPattern("dd-MMMM-yyyy HH:mm:ss")
+        val waktu_info      = waktu_konversi.format(waktu_format)
+
+        p0.tv_pos.text = "Pos : ${item.pos.toString()}"
+        p0.tv_tgl.text = "Tanggal ${waktu_info}"
 
         p0.card.setOnClickListener {
             val intent = Intent(p0.itemView.context, perangkat_data_2::class.java)

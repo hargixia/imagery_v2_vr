@@ -38,6 +38,7 @@ class Dashboard : AppCompatActivity() {
     private lateinit var btn_materi1        : Button
     private lateinit var btn_materi2        : Button
     private lateinit var btn_about          : Button
+    private lateinit var btn_test           : Button
     private lateinit var ds                 : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +61,8 @@ class Dashboard : AppCompatActivity() {
         btn_materi2     = findViewById(R.id.db_btn_materi2)
         btn_about       = findViewById(R.id.db_btn_about)
 
+        btn_test        = findViewById(R.id.db_btn_test)
+
         db_tv1.text = "Nama User : $ds_nama"
 
         val builder = AlertDialog.Builder(this)
@@ -69,6 +72,12 @@ class Dashboard : AppCompatActivity() {
         if (survey_count > 2){
             //startActivity(Intent(this@Dashboard, Survey::class.java))
             //releaseMediaPlayer()
+        }
+
+        btn_test.setOnClickListener {
+            val intent = Intent(this@Dashboard, Materi_Play_Video_2::class.java)
+            releaseMediaPlayer()
+            startActivity(intent)
         }
 
         btn_logout.setOnClickListener {
