@@ -42,9 +42,9 @@ class Materi_Play_Video_2 : AppCompatActivity() {
                 youTubePlayer.loadVideo(videoId, 0f)
 
                 ui_default = DefaultPlayerUiController(player,youTubePlayer)
-                //ui_default.showVideoTitle(false)
-                //ui_default.showSeekBar(false)
-                //ui_default.showYouTubeButton(false)
+                ui_default.showVideoTitle(false)
+                ui_default.showSeekBar(false)
+                ui_default.showYouTubeButton(false)
                 player.setCustomPlayerUi(ui_default.rootView)
 
                 super.onReady(youTubePlayer)
