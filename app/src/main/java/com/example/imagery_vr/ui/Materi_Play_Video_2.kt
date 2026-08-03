@@ -42,12 +42,12 @@ class Materi_Play_Video_2 : AppCompatActivity() {
                 youTubePlayer.loadVideo(videoId, 0f)
 
                 ui_default = DefaultPlayerUiController(player,youTubePlayer)
-                ui_default.showVideoTitle(false)
-                ui_default.showSeekBar(false)
-                ui_default.showYouTubeButton(false)
+                //ui_default.showVideoTitle(false)
+                //ui_default.showSeekBar(false)
+                //ui_default.showYouTubeButton(false)
                 player.setCustomPlayerUi(ui_default.rootView)
 
-                //super.onReady(youTubePlayer)
+                super.onReady(youTubePlayer)
             }
 
             override fun onStateChange(
@@ -59,7 +59,14 @@ class Materi_Play_Video_2 : AppCompatActivity() {
                     Toast.makeText(this@Materi_Play_Video_2,"End", Toast.LENGTH_LONG).show()
                 }
             }
-        }, true,IFramePlayerOptions.Builder(this@Materi_Play_Video_2).controls(0).autoplay(1).ivLoadPolicy(1).ccLoadPolicy(1).build())
+        }, true,
+            IFramePlayerOptions.Builder(this@Materi_Play_Video_2)
+                .controls(0)
+                .autoplay(1)
+                .ivLoadPolicy(1)
+                .ccLoadPolicy(1)
+                .fullscreen(1)
+                .build())
 
     }
 }
